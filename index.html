@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ігор Сергійович — Освітні технології</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f172a;
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 10% 20%, rgba(0, 136, 204, 0.05) 0%, transparent 30%),
+                        radial-gradient(circle at 90% 80%, rgba(34, 158, 217, 0.07) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 40px;
+            display: grid;
+            grid-template-columns: 420px 1fr;
+            gap: 70px;
+            align-items: start;
+        }
+
+        .sidebar {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(24px);
+            padding: 45px;
+            border-radius: 30px;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.35),
+                0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(0, 136, 204, 0.1), transparent 30%);
+            animation: rotate 12s linear infinite;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .sidebar:hover::before {
+            opacity: 1;
+        }
+
+        .sidebar:hover {
+            transform: translateY(-10px);
+            box-shadow: 
+                0 30px 80px rgba(0, 0, 0, 0.45),
+                0 0 0 1px rgba(255, 255, 255, 0.25) inset;
+        }
+
+        .profile-image {
+            width: 100%;
+            height: 420px;
+            object-fit: cover;
+            border-radius: 24px;
+            margin-bottom: 35px;
+            box-shadow: 
+                0 15px 40px rgba(0, 0, 0, 0.5),
+                0 0 0 3px rgba(255, 255, 255, 0.1);
+            transition: transform 0.5s ease, filter 0.3s ease;
+        }
+
+        .sidebar:hover .profile-image {
+            transform: scale(1.03) rotate(1deg);
+            filter: brightness(1.05);
+        }
+
+        .profile-name {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #0088cc 0%, #229ED9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .profile-description {
+            font-size: 17px;
+            color: #5f6368;
+            line-height: 1.8;
+            font-weight: 400;
+            margin-bottom: 30px;
+        }
+
+        .telegram-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 24px;
+            background: linear-gradient(135deg, #0088cc 0%, #229ED9 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 136, 204, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .telegram-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .telegram-link:hover::before {
+            left: 100%;
+        }
+
+        .telegram-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0, 136, 204, 0.6);
+            background: linear-gradient(135deg, #229ED9 0%, #0088cc 100%);
+        }
+
+        .telegram-icon {
+            font-size: 24px;
+        }
+
+        .main-content {
+            padding-top: 20px;
+        }
+
+        .header {
+            margin-bottom: 60px;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(24px);
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.35),
+                0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .header:hover {
+            transform: scale(1.01);
+        }
+
+        .header h1 {
+            font-size: 56px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #0088cc 0%, #229ED9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+            line-height: 1.2;
+            transition: transform 0.3s ease;
+        }
+
+        .header:hover h1 {
+            transform: scale(1.02);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(24px);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 136, 204, 0.15) 0%, rgba(34, 158, 217, 0.15) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 1;
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 
+                0 25px 60px rgba(0, 136, 204, 0.45),
+                0 0 0 1px rgba(255, 255, 255, 0.25) inset;
+            z-index: 2;
+        }
+
+        .project-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #0088cc 0%, #229ED9 100%);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 24px;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 20px rgba(0, 136, 204, 0.4);
+            position: relative;
+            z-index: 2;
+        }
+
+        .project-card:hover .project-icon {
+            transform: scale(1.2) rotate(12deg);
+            box-shadow: 0 12px 30px rgba(0, 136, 204, 0.6);
+        }
+
+        .project-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 14px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .project-description {
+            font-size: 16px;
+            color: #5f6368;
+            font-weight: 400;
+            line-height: 1.7;
+            position: relative;
+            z-index: 2;
+        }
+
+        .quote {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(24px);
+            padding: 50px;
+            border-radius: 24px;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.35),
+                0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s ease;
+        }
+
+        .quote:hover {
+            transform: scale(1.015);
+        }
+
+        .quote::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 30px;
+            font-size: 180px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #0088cc 0%, #229ED9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0.1;
+            line-height: 1;
+        }
+
+        .quote p {
+            font-size: 26px;
+            font-weight: 500;
+            background: linear-gradient(135deg, #0088cc 0%, #229ED9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-style: italic;
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .project-card {
+            animation: fadeInUp 0.6s ease backwards;
+        }
+
+        .project-card:nth-child(1) { animation-delay: 0.1s; }
+        .project-card:nth-child(2) { animation-delay: 0.2s; }
+        .project-card:nth-child(3) { animation-delay: 0.3s; }
+        .project-card:nth-child(4) { animation-delay: 0.4s; }
+        .project-card:nth-child(5) { animation-delay: 0.5s; }
+        .project-card:nth-child(6) { animation-delay: 0.6s; }
+
+        .header {
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .sidebar {
+            animation: fadeInUp 0.8s ease 0.2s backwards;
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+            .profile-image {
+                height: 350px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 50px 20px;
+            }
+            .header {
+                padding: 35px;
+            }
+            .header h1 {
+                font-size: 40px;
+            }
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            .quote p {
+                font-size: 20px;
+            }
+            .quote {
+                padding: 35px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <img src="https://scontent.fhrk10-1.fna.fbcdn.net/v/t39.30808-6/551028142_2246065635895984_6450569543106551550_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=ZzdeqbuUdnsQ7kNvwGhaiFK&_nc_oc=Adkjmi-c7ZlhPkVx5IIiaj4ZMBTQRvoHh9ZlRhmVnd7dkRMSPgf5Oym9-WyseLX8ktE&_nc_zt=23&_nc_ht=scontent.fhrk10-1.fna&_nc_gid=_xY9Z_HfJAiWYlF3CcI2WQ&oh=00_AfeM2uhOfZKNYM3hgYk9hIf6LI1k_rbZrM9eORkNTRYHdQ&oe=68FFD318" alt="Ігор Сергійович" class="profile-image">
+            <h2 class="profile-name">Ігор Сергійович</h2>
+            <p class="profile-description">Учитель, дослідник штучного інтелекту, автор інструментів для вчителів. Його проєкти допомагають зробити навчання ефективним і сучасним.</p>
+            <a href="https://t.me/ittchr" target="_blank" class="telegram-link">
+                <i class="fab fa-telegram telegram-icon"></i>
+                <span>Особистий блог у Telegram</span>
+            </a>
+        </aside>
+
+        <main class="main-content">
+            <div class="header" id="hover-header">
+                <h1 id="hover-title">Час настав?</h1>
+            </div>
+
+            <div class="projects-grid">
+                <a href="https://codenamexxv.github.io/Planner/" target="_blank" class="project-card">
+                    <div class="project-icon">📋</div>
+                    <h3 class="project-title">Планер вчителя</h3>
+                    <p class="project-description">Організуйте навчальний процес: плануйте уроки та структуруйте робочий час. Усі файли під рукою!</p>
+                </a>
+
+                <a href="https://codenamexxv.github.io/tcalendar/" target="_blank" class="project-card">
+                    <div class="project-icon">📅</div>
+                    <h3 class="project-title">Календар учителя</h3>
+                    <p class="project-description">Створювати календарне планування тепер дуже легко!</p>
+                </a>
+
+                <a href="https://codenamexxv.github.io/tCalc/" target="_blank" class="project-card">
+                    <div class="project-icon">🧮</div>
+                    <h3 class="project-title">Калькулятор середнього балу</h3>
+                    <p class="project-description">Швидко та точно розраховуйте середній бал учнів, економлячи час на обчисленнях.</p>
+                </a>
+
+                <a href="https://codenamexxv.github.io/homework/" target="_blank" class="project-card">
+                    <div class="project-icon">✏️</div>
+                    <h3 class="project-title">Генератор домашнього завдання</h3>
+                    <p class="project-description">Оформлюйте запис домашнього завдання у журнал за рівнями.</p>
+                </a>
+
+                <a href="https://codenamexxv.github.io/date/" target="_blank" class="project-card">
+                    <div class="project-icon">📝</div>
+                    <h3 class="project-title">Запис дати у зошит</h3>
+                    <p class="project-description">Автоматично формується дата для записів у зошитах відповідно до стандартів.</p>
+                </a>
+
+                <a href="https://t.me/ittchr" target="_blank" class="project-card">
+                    <div class="project-icon">✈️</div>
+                    <h3 class="project-title">Telegram блог</h3>
+                    <p class="project-description">Слідкуйте за новинами освітніх технологій, корисними порадами та оновленнями проєктів.</p>
+                </a>
+            </div>
+
+            <div class="quote" id="dynamic-quote">
+                <p>«Майбутнє вже настало. Давай вивчимо його разом!»</p>
+            </div>
+        </main>
+
+        <script>
+            // Інтерактивний заголовок
+            const header = document.getElementById('hover-header');
+            const title = document.getElementById('hover-title');
+            const originalText = "Час настав?";
+            const hoverText = "Час змінюватися на краще! Зробимо це разом!";
+
+            header.addEventListener('mouseenter', () => {
+                title.textContent = hoverText;
+            });
+
+            header.addEventListener('mouseleave', () => {
+                title.textContent = originalText;
+            });
+
+            // Динамічна цитата
+            const quotes = [
+                "«Майбутнє вже настало. Давай вивчимо його разом!»",
+                "«Освіта — це не наповнення відра, а розпалювання вогню.»",
+                "«Найкращий спосіб передбачити майбутнє — створити його.»",
+                "«У тебе все вийде!»",
+                "«Технології не замінять учителя, але зроблять його могутнішим.»"
+            ];
+
+            const quoteElement = document.getElementById('dynamic-quote').querySelector('p');
+            let currentIndex = 0;
+
+            setInterval(() => {
+                quoteElement.style.opacity = 0;
+                setTimeout(() => {
+                    currentIndex = (currentIndex + 1) % quotes.length;
+                    quoteElement.textContent = quotes[currentIndex];
+                    quoteElement.style.opacity = 1;
+                }, 300);
+            }, 10000);
+        </script>
+</body>
+</html>
