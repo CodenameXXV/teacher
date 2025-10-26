@@ -177,8 +177,6 @@
             position: relative;
             overflow: hidden;
             transition: transform 0.3s ease;
-        
-            /* Центрування вмісту */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -368,6 +366,8 @@
         .project-card:nth-child(4) { animation-delay: 0.4s; }
         .project-card:nth-child(5) { animation-delay: 0.5s; }
         .project-card:nth-child(6) { animation-delay: 0.6s; }
+        .project-card:nth-child(7) { animation-delay: 0.7s; }
+        .project-card:nth-child(8) { animation-delay: 0.8s; }
 
         .header {
             animation: fadeInUp 0.8s ease;
@@ -457,6 +457,18 @@
                     <p class="project-description">Автоматично формується дата для записів у зошитах відповідно до стандартів.</p>
                 </a>
 
+                <a href="https://codenamexxv.github.io/name/" target="_blank" class="project-card">
+                    <div class="project-icon">🔤</div>
+                    <h3 class="project-title">Транслітерація імені та прізвища</h3>
+                    <p class="project-description">Онлайн-інструмент для транслітерації прізвища й імені.</p>
+                </a>
+
+                <a href="https://codenamexxv.github.io/verbs.github.io/" target="_blank" class="project-card">
+                    <div class="project-icon">📚</div>
+                    <h3 class="project-title">Неправильні дієслова англійської мови</h3>
+                    <p class="project-description">Повний список англійських неправильних дієслів з формами (infinitive — past — past participle) і перекладом українською.</p>
+                </a>
+
                 <a href="https://t.me/ittchr" target="_blank" class="project-card">
                     <div class="project-icon">✍️</div>
                     <h3 class="project-title">Telegram блог</h3>
@@ -468,42 +480,41 @@
                 <p>«Майбутнє вже настало. Давай вивчимо його разом!»</p>
             </div>
         </main>
+    </div>
 
-        <script>
-            // Інтерактивний заголовок
-            const header = document.getElementById('hover-header');
-            const title = document.getElementById('hover-title');
-            const originalText = "Час змінюватися на краще!";
-            const hoverText = "Зробимо це разом!";
+    <script>
+        const header = document.getElementById('hover-header');
+        const title = document.getElementById('hover-title');
+        const originalText = "Час змінюватися на краще!";
+        const hoverText = "Зробимо це разом!";
 
-            header.addEventListener('mouseenter', () => {
-                title.textContent = hoverText;
-            });
+        header.addEventListener('mouseenter', () => {
+            title.textContent = hoverText;
+        });
 
-            header.addEventListener('mouseleave', () => {
-                title.textContent = originalText;
-            });
+        header.addEventListener('mouseleave', () => {
+            title.textContent = originalText;
+        });
 
-            // Динамічна цитата
-            const quotes = [
-                "«Майбутнє вже настало. Давай вивчимо його разом!»",
-                "«Освіта — це не наповнення відра, а розпалювання вогню.»",
-                "«Найкращий спосіб передбачити майбутнє — створити його.»",
-                "«У тебе все вийде!»",
-                "«Технології не замінять учителя, але зроблять його могутнішим.»"
-            ];
+        const quotes = [
+            "«Майбутнє вже настало. Давай вивчимо його разом!»",
+            "«Освіта — це не наповнення відра, а розпалювання вогню.»",
+            "«Найкращий спосіб передбачити майбутнє — створити його.»",
+            "«У тебе все вийде!»",
+            "«Технології не замінять учителя, але зроблять його могутнішим.»"
+        ];
 
-            const quoteElement = document.getElementById('dynamic-quote').querySelector('p');
-            let currentIndex = 0;
+        const quoteElement = document.getElementById('dynamic-quote').querySelector('p');
+        let currentIndex = 0;
 
-            setInterval(() => {
-                quoteElement.style.opacity = 0;
-                setTimeout(() => {
-                    currentIndex = (currentIndex + 1) % quotes.length;
-                    quoteElement.textContent = quotes[currentIndex];
-                    quoteElement.style.opacity = 1;
-                }, 300);
-            }, 10000);
-        </script>
+        setInterval(() => {
+            quoteElement.style.opacity = 0;
+            setTimeout(() => {
+                currentIndex = (currentIndex + 1) % quotes.length;
+                quoteElement.textContent = quotes[currentIndex];
+                quoteElement.style.opacity = 1;
+            }, 300);
+        }, 10000);
+    </script>
 </body>
 </html>
