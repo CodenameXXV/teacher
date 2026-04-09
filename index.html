@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Розробки вчителя</title>
-	<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/CodenameXXV/teacher/refs/heads/main/icon.png">
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/CodenameXXV/teacher/refs/heads/main/icon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
@@ -232,17 +232,6 @@
 
         .category-section {
             margin-bottom: 50px;
-            display: none;
-        }
-
-        .category-section.active {
-            display: block;
-            animation: fadeIn 0.4s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .category-header {
@@ -281,6 +270,16 @@
             display: block;
             -webkit-tap-highlight-color: rgba(0, 136, 204, 0.2);
             touch-action: manipulation;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tool-card.hidden {
+            display: none;
         }
 
         .tool-card:hover {
@@ -291,9 +290,12 @@
         }
 
         .tool-icon {
-            font-size: 42px;
+            width: 48px;
+            height: 48px;
             margin-bottom: 15px;
             display: block;
+            object-fit: contain;
+            border-radius: 8px;
         }
 
         .tool-title {
@@ -485,7 +487,8 @@
             }
 
             .tool-icon {
-                font-size: 36px;
+                width: 42px;
+                height: 42px;
             }
 
             .tool-title {
@@ -556,7 +559,8 @@
             }
 
             .tool-icon {
-                font-size: 32px;
+                width: 36px;
+                height: 36px;
                 margin-bottom: 12px;
             }
 
@@ -659,238 +663,120 @@
                 <p>Сучасні рішення для ефективного навчання. Обирайте категорію та знаходьте потрібні інструменти.</p>
             </div>
 
-            <!-- Всі інструменти -->
-            <div class="category-section active" id="all">
+            <!-- Єдина секція з фільтрацією карток -->
+            <div class="category-section">
                 <div class="category-header">
-                    <span class="category-header-icon">🏠</span>
-                    <h2>Всі інструменти</h2>
+                    <span class="category-header-icon" id="current-icon">🏠</span>
+                    <h2 id="current-title">Всі інструменти</h2>
                 </div>
-                <div class="tools-grid">
-                    <a href="https://codenamexxv.github.io/Planner/" target="_blank" class="tool-card">
-                        <span class="tool-icon">📋</span>
+                <div class="tools-grid" id="tools-grid">
+                    <!-- Планування -->
+                    <a href="https://codenamexxv.github.io/Planner/" target="_blank" class="tool-card" data-category="planning">
+                        <img src="https://raw.githubusercontent.com/CodenameXXV/teacher/refs/heads/main/icon.png" alt="Planner" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z%22/%3E%3C/svg%3E'">
                         <h3 class="tool-title">Планер вчителя</h3>
                         <p class="tool-description">Організуйте навчальний процес: плануйте уроки та структуруйте робочий час.</p>
                         <span class="tool-badge">Планування</span>
                     </a>
 
-                    <a href="https://codenamexxv.github.io/tcalendar/" target="_blank" class="tool-card">
-                        <span class="tool-icon">📅</span>
+                    <a href="https://codenamexxv.github.io/tcalendar/" target="_blank" class="tool-card" data-category="planning">
+                        <img src="https://raw.githubusercontent.com/CodenameXXV/tcalendar/refs/heads/main/calendar.png" alt="Calendar" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm-8 4H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z%22/%3E%3C/svg%3E'">
                         <h3 class="tool-title">Календар учителя</h3>
                         <p class="tool-description">Створюйте календарне планування легко і швидко.</p>
                         <span class="tool-badge">Планування</span>
                     </a>
 
-                    <a href="https://codenamexxv.github.io/lesson/" target="_blank" class="tool-card">
-                        <span class="tool-icon">🎓</span>
-                        <h3 class="tool-title">Генератор уроків англійської</h3>
-                        <p class="tool-description">Створюйте структуровані уроки англійської з готовими етапами за допомогою ШІ.</p>
-                        <span class="tool-badge">Англійська мова</span>
-                    </a>
-
-                    <a href="https://codenamexxv.github.io/homework/" target="_blank" class="tool-card">
-                        <span class="tool-icon">✏️</span>
+                    <a href="https://codenamexxv.github.io/homework/" target="_blank" class="tool-card" data-category="planning">
+                        <img src="https://raw.githubusercontent.com/CodenameXXV/homework/refs/heads/main/homework.png" alt="Homework" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z%22/%3E%3C/svg%3E'">
                         <h3 class="tool-title">Генератор домашнього завдання</h3>
                         <p class="tool-description">Оформлюйте запис домашнього завдання у журнал за рівнями.</p>
                         <span class="tool-badge">Планування</span>
                     </a>
 
-                    <a href="https://codenamexxv.github.io/verbs.github.io/" target="_blank" class="tool-card">
-                        <span class="tool-icon">📚</span>
-                        <h3 class="tool-title">Неправильні дієслова</h3>
-                        <p class="tool-description">Повний список неправильних дієслів англійської мови з перекладом.</p>
-                        <span class="tool-badge">Англійська мова</span>
-                    </a>
-
-                    <a href="https://codenamexxv.github.io/tCalc/" target="_blank" class="tool-card">
-                        <span class="tool-icon">🧮</span>
-                        <h3 class="tool-title">Калькулятор середнього балу</h3>
-                        <p class="tool-description">Швидко розраховуйте середній бал учнів.</p>
-                        <span class="tool-badge">Утиліти</span>
-                    </a>
-
-                    <a href="https://codenamexxv.github.io/date/" target="_blank" class="tool-card">
-                        <span class="tool-icon">📝</span>
-                        <h3 class="tool-title">Запис дати у зошит</h3>
-                        <p class="tool-description">Автоматичне форматування дати для записів у зошитах.</p>
-                        <span class="tool-badge">Утиліти</span>
-                    </a>
-
-                    <a href="https://codenamexxv.github.io/name/" target="_blank" class="tool-card">
-                        <span class="tool-icon">🔤</span>
-                        <h3 class="tool-title">Транслітерація імені</h3>
-                        <p class="tool-description">Онлайн-інструмент для транслітерації прізвища й імені.</p>
-                        <span class="tool-badge">Утиліти</span>
-                    </a>
-
-                    <a href="https://codenamexxv.github.io/voc/" target="_blank" class="tool-card">
-                        <span class="tool-icon">🔤</span>
-                        <h3 class="tool-title">Voc+</h3>
-                        <p class="tool-description">Легке створення словнику за вашими словами з англійської мови.</p>
-                        <span class="tool-badge">Англійська мова</span>
-                    </a>
-
-					<a href="https://codenamexxv.github.io/warmup/" target="_blank" class="tool-card">
-                        <span class="tool-icon">🎉</span>
-                        <h3 class="tool-title">English WarmUP</h3>
-                        <p class="tool-description">Зручна розминка для вашого уроку Англійської.</p>
-                        <span class="tool-badge">Англійська мова</span>
-                    </a>
-
-                    <a href="https://codenamexxv.github.io/EduSearch/" target="_blank" class="tool-card">
-                        <span class="tool-icon">🔍</span>
+                    <a href="https://codenamexxv.github.io/EduSearch/" target="_blank" class="tool-card" data-category="planning">
+                        <img src="https://raw.githubusercontent.com/CodenameXXV/EduSearch/refs/heads/main/search.png" alt="EduSearch" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z%22/%3E%3C/svg%3E'">
                         <h3 class="tool-title">Educational Search</h3>
                         <p class="tool-description">Функціональний пошуковик завдань для учнів по різним популярним сайтам.</p>
                         <span class="tool-badge">Планування</span>
                     </a>
-					
-					                    <a href="https://codenamexxv.github.io/ref/" target="_blank" class="tool-card">
-                        <span class="tool-icon">🌟</span>
+                    
+                    <a href="https://codenamexxv.github.io/ref/" target="_blank" class="tool-card" data-category="planning">
+                        <img src="https://raw.githubusercontent.com/CodenameXXV/ref/refs/heads/main/ref.png" alt="Reflection" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z%22/%3E%3C/svg%3E'">
                         <h3 class="tool-title">Рефлексія уроку</h3>
                         <p class="tool-description">Кожен метод — окремий спосіб проаналізувати урок. Вчитель показує — учні відповідають усно або в зошиті.</p>
                         <span class="tool-badge">Планування</span>
                     </a>
 
-										<a href="https://codenamexxv.github.io/logic/" target="_blank" class="tool-card">
-                        <span class="tool-icon">🧩</span>
+                    <a href="https://codenamexxv.github.io/logic/" target="_blank" class="tool-card" data-category="planning">
+                        <img src="https://raw.githubusercontent.com/CodenameXXV/logic/refs/heads/main/logic.png" alt="Logic" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z%22/%3E%3C/svg%3E'">
                         <h3 class="tool-title">Загадки на логіку</h3>
                         <p class="tool-description">60 загадок — від класичних дитячих питань до складних логічних пасток.</p>
                         <span class="tool-badge">Планування</span>
                     </a>
-
-										<a href="https://codenamexxv.github.io/random/" target="_blank" class="tool-card">
-                        <span class="tool-icon">🎲</span>
+                    
+                    <a href="https://codenamexxv.github.io/random/" target="_blank" class="tool-card" data-category="planning">
+                        <img src="https://raw.githubusercontent.com/CodenameXXV/random/refs/heads/main/ruletka.png" alt="Random" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z%22/%3E%3C/svg%3E'">
                         <h3 class="tool-title">Класна Рулетка</h3>
                         <p class="tool-description">Рандомний вибір учнів без стресу.</p>
                         <span class="tool-badge">Планування</span>
                     </a>
-                </div>
-            </div>
 
-            <!-- Планування -->
-            <div class="category-section" id="planning">
-                <div class="category-header">
-                    <span class="category-header-icon">📋</span>
-                    <h2>Планування</h2>
-                </div>
-                <div class="tools-grid">
-                    <a href="https://codenamexxv.github.io/Planner/" target="_blank" class="tool-card">
-                        <span class="tool-icon">📋</span>
-                        <h3 class="tool-title">Планер вчителя</h3>
-                        <p class="tool-description">Організуйте навчальний процес: плануйте уроки та структуруйте робочий час.</p>
-                    </a>
-
-                    <a href="https://codenamexxv.github.io/tcalendar/" target="_blank" class="tool-card">
-                        <span class="tool-icon">📅</span>
-                        <h3 class="tool-title">Календар учителя</h3>
-                        <p class="tool-description">Створюйте календарне планування легко і швидко.</p>
-                    </a>
-
-                    <a href="https://codenamexxv.github.io/homework/" target="_blank" class="tool-card">
-                        <span class="tool-icon">✏️</span>
-                        <h3 class="tool-title">Генератор домашнього завдання</h3>
-                        <p class="tool-description">Оформлюйте запис домашнього завдання у журнал за рівнями.</p>
-                    </a>
-
-                    <a href="https://codenamexxv.github.io/EduSearch/" target="_blank" class="tool-card">
-                        <span class="tool-icon">🔍</span>
-                        <h3 class="tool-title">Educational Search</h3>
-                        <p class="tool-description">Функціональний пошуковик завдань для учнів по різним популярним сайтам.</p>
-                    </a>
-					
-					<a href="https://codenamexxv.github.io/ref/" target="_blank" class="tool-card">
-                        <span class="tool-icon">🌟</span>
-                        <h3 class="tool-title">Рефлексія уроку</h3>
-                        <p class="tool-description">Кожен метод — окремий спосіб проаналізувати урок. Вчитель показує — учні відповідають усно або в зошиті.</p>
-                        <span class="tool-badge">Планування</span>
-                    </a>
-
-					<a href="https://codenamexxv.github.io/logic/" target="_blank" class="tool-card">
-                        <span class="tool-icon">🧩</span>
-                        <h3 class="tool-title">Загадки на логіку</h3>
-                        <p class="tool-description">60 загадок — від класичних дитячих питань до складних логічних пасток.</p>
-                        <span class="tool-badge">Планування</span>
-                    </a>
-					<a href="https://codenamexxv.github.io/random/" target="_blank" class="tool-card">
-                        <span class="tool-icon">🎲</span>
-                        <h3 class="tool-title">Класна Рулетка</h3>
-                        <p class="tool-description">Рандомний вибір учнів без стресу.</p>
-                        <span class="tool-badge">Планування</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Англійська мова -->
-            <div class="category-section" id="english">
-                <div class="category-header">
-                    <span class="category-header-icon">🇬🇧</span>
-                    <h2>Англійська мова</h2>
-                </div>
-                <div class="tools-grid">
-                    <a href="https://codenamexxv.github.io/lesson/" target="_blank" class="tool-card">
-                        <span class="tool-icon">🎓</span>
+                    <!-- Англійська мова -->
+                    <a href="https://codenamexxv.github.io/lesson/" target="_blank" class="tool-card" data-category="english">
+                        <img src="https://raw.githubusercontent.com/CodenameXXV/lesson/refs/heads/main/book-mark.png" alt="Lesson" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z%22/%3E%3C/svg%3E'">
                         <h3 class="tool-title">Генератор уроків англійської</h3>
                         <p class="tool-description">Створюйте структуровані уроки англійської з готовими етапами за допомогою ШІ.</p>
+                        <span class="tool-badge">Англійська мова</span>
                     </a>
 
-                    <a href="https://codenamexxv.github.io/verbs.github.io/" target="_blank" class="tool-card">
-                        <span class="tool-icon">📚</span>
+                    <a href="https://codenamexxv.github.io/verbs.github.io/" target="_blank" class="tool-card" data-category="english">
+                        <img src="https://raw.githubusercontent.com/CodenameXXV/name/refs/heads/main/circle.png" alt="Verbs" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z%22/%3E%3C/svg%3E'">
                         <h3 class="tool-title">Неправильні дієслова</h3>
                         <p class="tool-description">Повний список неправильних дієслів англійської мови з перекладом.</p>
+                        <span class="tool-badge">Англійська мова</span>
                     </a>
 
-                    <a href="https://codenamexxv.github.io/voc/" target="_blank" class="tool-card">
-                        <span class="tool-icon">🔤</span>
+                    <a href="https://codenamexxv.github.io/voc/" target="_blank" class="tool-card" data-category="english">
+                        <img src="https://raw.githubusercontent.com/CodenameXXV/voc/refs/heads/main/dictionary.png" alt="Voc" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53-1.7.94-3.67 1.47-5.74 1.47-5.24 0-9.66-3.5-10.94-8.25C.8 10.06 5.78 14.5 11.8 14.5c.37 0 .72-.02 1.07-.06-.33.89-.74 1.75-1.21 2.57l1.21-1.94zM19 13c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3zm-2-8.5c-.83 0-1.5-.67-1.5-1.5S16.17 1.5 17 1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z%22/%3E%3C/svg%3E'">
                         <h3 class="tool-title">Voc+</h3>
                         <p class="tool-description">Легке створення словнику за вашими словами з англійської мови.</p>
+                        <span class="tool-badge">Англійська мова</span>
                     </a>
 
-					<a href="https://codenamexxv.github.io/warmup/" target="_blank" class="tool-card">
-                        <span class="tool-icon">🎉</span>
+                    <a href="https://codenamexxv.github.io/warmup/" target="_blank" class="tool-card" data-category="english">
+                        <img src="https://raw.githubusercontent.com/CodenameXXV/warmup/refs/heads/main/EnWarmUP.png" alt="Warmup" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z%22/%3E%3C/svg%3E'">
                         <h3 class="tool-title">English WarmUP</h3>
                         <p class="tool-description">Зручна розминка для вашого уроку Англійської.</p>
                         <span class="tool-badge">Англійська мова</span>
                     </a>
-                </div>
-            </div>
 
-            <!-- Корисні утиліти -->
-            <div class="category-section" id="tools">
-                <div class="category-header">
-                    <span class="category-header-icon">🛠️</span>
-                    <h2>Корисні утиліти</h2>
-                </div>
-                <div class="tools-grid">
-                    <a href="https://codenamexxv.github.io/tCalc/" target="_blank" class="tool-card">
-                        <span class="tool-icon">🧮</span>
+                    <!-- Утиліти -->
+                    <a href="https://codenamexxv.github.io/tCalc/" target="_blank" class="tool-card" data-category="tools">
+                        <img src="https://raw.githubusercontent.com/CodenameXXV/tCalc/refs/heads/main/icon-192.png" alt="Calculator" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2zm-8 8H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2z%22/%3E%3C/svg%3E'">
                         <h3 class="tool-title">Калькулятор середнього балу</h3>
                         <p class="tool-description">Швидко розраховуйте середній бал учнів.</p>
+                        <span class="tool-badge">Утиліти</span>
                     </a>
 
-                    <a href="https://codenamexxv.github.io/date/" target="_blank" class="tool-card">
-                        <span class="tool-icon">📝</span>
+                    <a href="https://codenamexxv.github.io/date/" target="_blank" class="tool-card" data-category="tools">
+                        <img src="https://raw.githubusercontent.com/CodenameXXV/date/refs/heads/main/date.png" alt="Date" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z%22/%3E%3C/svg%3E'">
                         <h3 class="tool-title">Запис дати у зошит</h3>
                         <p class="tool-description">Автоматичне форматування дати для записів у зошитах.</p>
+                        <span class="tool-badge">Утиліти</span>
                     </a>
 
-                    <a href="https://codenamexxv.github.io/name/" target="_blank" class="tool-card">
-                        <span class="tool-icon">🔤</span>
+                    <a href="https://codenamexxv.github.io/name/" target="_blank" class="tool-card" data-category="tools">
+                        <img src="https://raw.githubusercontent.com/CodenameXXV/name/refs/heads/main/circle.png" alt="Name" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z%22/%3E%3C/svg%3E'">
                         <h3 class="tool-title">Транслітерація імені</h3>
                         <p class="tool-description">Онлайн-інструмент для транслітерації прізвища й імені.</p>
+                        <span class="tool-badge">Утиліти</span>
                     </a>
-                </div>
-            </div>
 
-            <!-- Спільнота -->
-            <div class="category-section" id="community">
-                <div class="category-header">
-                    <span class="category-header-icon">💬</span>
-                    <h2>Спільнота</h2>
-                </div>
-                <div class="tools-grid">
-                    <a href="https://t.me/ittchr" target="_blank" class="tool-card">
-                        <span class="tool-icon">✍️</span>
+                    <!-- Спільнота -->
+                    <a href="https://t.me/ittchr" target="_blank" class="tool-card" data-category="community">
+                        <img src="https://www.google.com/s2/favicons?domain=t.me/ittchr&sz=64" alt="Telegram" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295l.213-3.054 5.56-5.022c.242-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z%22/%3E%3C/svg%3E'">
                         <h3 class="tool-title">Telegram блог</h3>
                         <p class="tool-description">Новини освітніх технологій, корисні поради та оновлення проєктів.</p>
+                        <span class="tool-badge">Спільнота</span>
                     </a>
                 </div>
             </div>
@@ -899,21 +785,54 @@
 
     <script>
         const categoryItems = document.querySelectorAll('.category-item');
-        const categorySections = document.querySelectorAll('.category-section');
+        const toolCards = document.querySelectorAll('.tool-card');
+        const currentIcon = document.getElementById('current-icon');
+        const currentTitle = document.getElementById('current-title');
 
+        // Мапа категорій для заголовків та іконок
+        const categoryInfo = {
+            all: { icon: '🏠', title: 'Всі інструменти' },
+            planning: { icon: '📋', title: 'Планування' },
+            english: { icon: '🇬🇧', title: 'Англійська мова' },
+            tools: { icon: '🛠️', title: 'Корисні утиліти' },
+            community: { icon: '💬', title: 'Спільнота' }
+        };
+
+        // Функція фільтрації карток
+        function filterCards(category) {
+            // Оновлюємо заголовок та іконку
+            const info = categoryInfo[category];
+            currentIcon.textContent = info.icon;
+            currentTitle.textContent = info.title;
+
+            // Фільтруємо картки
+            toolCards.forEach(card => {
+                const cardCategory = card.getAttribute('data-category');
+                
+                if (category === 'all' || cardCategory === category) {
+                    card.classList.remove('hidden');
+                    // Додаємо анімацію при показі
+                    card.style.animation = 'none';
+                    setTimeout(() => {
+                        card.style.animation = 'fadeIn 0.4s ease';
+                    }, 10);
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        // Обробники подій для категорій
         categoryItems.forEach(item => {
             item.addEventListener('click', () => {
                 const category = item.getAttribute('data-category');
                 
+                // Оновлюємо активний стан кнопок
                 categoryItems.forEach(cat => cat.classList.remove('active'));
                 item.classList.add('active');
                 
-                categorySections.forEach(section => {
-                    section.classList.remove('active');
-                    if (section.id === category) {
-                        section.classList.add('active');
-                    }
-                });
+                // Фільтруємо картки
+                filterCards(category);
             });
         });
 
@@ -949,6 +868,9 @@
                 });
             });
         }
+
+        // Ініціалізація: показуємо всі картки при завантаженні
+        filterCards('all');
     </script>
 </body>
 </html>
