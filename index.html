@@ -3,895 +3,960 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Розробки вчителя</title>
+    <title>Освітній блог</title>
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/CodenameXXV/teacher/refs/heads/main/icon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --bg: #080e1a;
+            --bg2: #0d1628;
+            --surface: rgba(255,255,255,0.04);
+            --surface2: rgba(255,255,255,0.07);
+            --border: rgba(255,255,255,0.08);
+            --border2: rgba(0,136,204,0.3);
+            --blue: #0088cc;
+            --blue2: #229ED9;
+            --blue-glow: rgba(0,136,204,0.15);
+            --text: #e2e8f0;
+            --text2: #94a3b8;
+            --text3: #64748b;
+            --accent: #38bdf8;
+            --accent2: #7dd3fc;
+            --purple: #818cf8;
+            --green: #34d399;
+            --radius: 16px;
+            --radius-sm: 10px;
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Inter', sans-serif;
-            background: #0f172a;
-            color: #e0e0e0;
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.6;
-            padding-top: 50px;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
 
-        .top-bar {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 12px 0;
+        /* ── ANIMATED BG ── */
+        .bg-canvas {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .bg-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.12;
+            animation: orb-drift 20s ease-in-out infinite alternate;
+        }
+        .bg-orb:nth-child(1) { width: 600px; height: 600px; background: #0088cc; top: -200px; left: -200px; animation-duration: 22s; }
+        .bg-orb:nth-child(2) { width: 400px; height: 400px; background: #7c3aed; top: 40%; right: -150px; animation-duration: 18s; animation-delay: -8s; }
+        .bg-orb:nth-child(3) { width: 350px; height: 350px; background: #0ea5e9; bottom: -100px; left: 30%; animation-duration: 25s; animation-delay: -4s; }
+        @keyframes orb-drift {
+            from { transform: translate(0,0) scale(1); }
+            to   { transform: translate(40px, 30px) scale(1.1); }
         }
 
-        .top-bar-content {
+        /* ── NAV ── */
+        .nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(8,14,26,0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            transition: box-shadow 0.3s;
+        }
+        .nav.scrolled { box-shadow: 0 4px 30px rgba(0,0,0,0.4); }
+        .nav-inner {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 40px;
+            padding: 0 32px;
+            height: 64px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            gap: 40px;
+            justify-content: space-between;
+            gap: 24px;
         }
-
         .logo {
             display: flex;
             align-items: center;
-            gap: 15px;
-        }
-
-        .logo-image {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #0088cc;
+            gap: 12px;
+            text-decoration: none;
             flex-shrink: 0;
         }
-
-        .logo-text h1 {
-            font-size: 20px;
-            font-weight: 700;
-            color: #0088cc;
-            margin-bottom: 2px;
+        .logo-img {
+            width: 42px; height: 42px;
+            border-radius: 50%;
+            border: 2px solid var(--blue);
+            object-fit: cover;
         }
+        .logo-text { line-height: 1.2; }
+        .logo-name { font-size: 16px; font-weight: 700; color: var(--text); }
+        .logo-sub  { font-size: 11px; color: var(--text2); }
 
-        .logo-text p {
-            font-size: 13px;
-            color: #94a3b8;
-        }
-
-        .telegram-btn {
+        .nav-links {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #0088cc 0%, #229ED9 100%);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-            -webkit-tap-highlight-color: rgba(0, 136, 204, 0.2);
-            touch-action: manipulation;
-            min-height: 44px;
-        }
-
-        .nav-menu {
-            display: flex;
+            gap: 4px;
             list-style: none;
-            gap: 5px;
-            margin: 0;
-            padding: 0;
         }
-
-        .nav-item {
-            display: flex;
-        }
-
-        .nav-link {
+        .nav-links a {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 10px 16px;
-            color: #cbd5e1;
+            gap: 7px;
+            padding: 8px 14px;
+            color: var(--text2);
             text-decoration: none;
-            border-radius: 8px;
             font-size: 14px;
             font-weight: 500;
-            transition: all 0.3s ease;
+            border-radius: var(--radius-sm);
+            transition: all 0.2s;
             white-space: nowrap;
-            -webkit-tap-highlight-color: rgba(0, 136, 204, 0.2);
-            touch-action: manipulation;
-            min-height: 44px;
         }
+        .nav-links a:hover { color: var(--accent); background: var(--surface2); }
 
-        .nav-link:hover {
-            background: rgba(0, 136, 204, 0.15);
-            color: #0088cc;
-        }
+        .nav-right { display: flex; align-items: center; gap: 10px; }
 
-        .nav-link i {
-            font-size: 16px;
-        }
-
-        .telegram-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 136, 204, 0.4);
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px;
-            position: relative;
-            min-height: calc(100vh - 70px);
-        }
-
-        .sidebar {
-            position: absolute;
-            left: 40px;
-            top: 80px;
-            width: 280px;
-            background: rgba(255, 255, 255, 0.03);
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 30px 20px;
-            min-height: calc(100% - 30px);
-            z-index: 10;
-        }
-
-        .sidebar h2 {
-            font-size: 16px;
-            font-weight: 600;
-            color: #94a3b8;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .category-list {
-            list-style: none;
-        }
-
-        .category-item {
-            padding: 12px 15px;
-            margin-bottom: 5px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: #cbd5e1;
-            font-size: 15px;
+        .btn-tg {
             display: flex;
             align-items: center;
-            gap: 10px;
-            min-height: 44px;
-            -webkit-tap-highlight-color: rgba(0, 136, 204, 0.2);
-        }
-
-        .category-item:hover {
-            background: rgba(0, 136, 204, 0.1);
-            color: #0088cc;
-        }
-
-        .category-item.active {
-            background: linear-gradient(135deg, rgba(0, 136, 204, 0.2) 0%, rgba(34, 158, 217, 0.2) 100%);
-            color: #0088cc;
+            gap: 8px;
+            padding: 9px 18px;
+            background: linear-gradient(135deg, var(--blue), var(--blue2));
+            color: #fff;
+            text-decoration: none;
+            border-radius: var(--radius-sm);
             font-weight: 600;
+            font-size: 14px;
+            transition: all 0.25s;
+            white-space: nowrap;
+        }
+        .btn-tg:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,136,204,0.45); }
+
+        .burger {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 22px;
+            cursor: pointer;
+            padding: 8px;
         }
 
-        .category-icon {
-            font-size: 18px;
-            width: 24px;
+        /* ── PAGE LAYOUT ── */
+        .page {
+            position: relative;
+            z-index: 1;
+            padding-top: 64px;
         }
 
-        .main-content {
-            margin-left: 280px;
-            padding: 20px;
+        /* ── HERO ── */
+        .hero {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 44px 32px 36px;
         }
-
-        .hero-section {
-            background: linear-gradient(135deg, rgba(0, 136, 204, 0.1) 0%, rgba(34, 158, 217, 0.1) 100%);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 40px;
-            text-align: center;
-            border: 1px solid rgba(0, 136, 204, 0.2);
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 12px;
+            background: var(--blue-glow);
+            border: 1px solid var(--border2);
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: 14px;
         }
+        .hero-tag span { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(0.8)} }
 
-        .hero-section h1 {
-            font-size: 28px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #0088cc 0%, #229ED9 100%);
+        .hero-title {
+            font-family: 'Manrope', sans-serif;
+            font-size: clamp(28px, 4vw, 46px);
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+        .hero-title span {
+            background: linear-gradient(135deg, var(--accent), var(--blue2), var(--purple));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 15px;
         }
-
-        .hero-section p {
-            font-size: 18px;
-            color: #94a3b8;
+        .hero-desc {
+            font-size: 16px;
+            color: var(--text2);
             max-width: 600px;
+            margin-bottom: 24px;
+        }
+        .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 22px;
+            background: linear-gradient(135deg, var(--blue), var(--blue2));
+            color: #fff;
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.25s;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,136,204,0.4); }
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 22px;
+            background: var(--surface2);
+            color: var(--text);
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 14px;
+            border: 1px solid var(--border);
+            transition: all 0.25s;
+        }
+        .btn-secondary:hover { background: var(--surface); border-color: var(--border2); color: var(--accent); transform: translateY(-2px); }
+
+        /* ── STATS ── */
+        .stats {
+            max-width: 1400px;
             margin: 0 auto;
+            padding: 0 32px 36px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
         }
-
-        .category-section {
-            margin-bottom: 50px;
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s;
         }
+        .stat-card:hover { border-color: var(--border2); background: var(--surface2); transform: translateY(-3px); }
+        .stat-num {
+            font-family: 'Manrope', sans-serif;
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--blue2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .stat-label { font-size: 13px; color: var(--text2); margin-top: 4px; }
 
-        .category-header {
+        /* ── SECTIONS ── */
+        .section { max-width: 1400px; margin: 0 auto; padding: 0 32px 80px; }
+
+        .section-head {
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid rgba(0, 136, 204, 0.3);
+            gap: 16px;
+            margin-bottom: 36px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        .section-icon {
+            width: 48px; height: 48px;
+            border-radius: var(--radius-sm);
+            background: var(--blue-glow);
+            border: 1px solid var(--border2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        .section-head h2 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text);
+        }
+        .section-head p { font-size: 14px; color: var(--text2); margin-top: 2px; }
+
+        /* ── FILTER TABS ── */
+        .filter-bar {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+        }
+        .filter-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 18px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            color: var(--text2);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .filter-btn:hover { border-color: var(--border2); color: var(--accent); }
+        .filter-btn.active {
+            background: linear-gradient(135deg, rgba(0,136,204,0.2), rgba(34,158,217,0.2));
+            border-color: var(--blue);
+            color: var(--accent);
+            font-weight: 600;
         }
 
-        .category-header-icon {
-            font-size: 36px;
-        }
-
-        .category-header h2 {
-            font-size: 32px;
-            font-weight: 700;
-            color: #0088cc;
-        }
-
+        /* ── TOOLS GRID ── */
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
         }
-
         .tool-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 30px;
-            transition: all 0.3s ease;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
             text-decoration: none;
             color: inherit;
-            display: block;
-            -webkit-tap-highlight-color: rgba(0, 136, 204, 0.2);
-            touch-action: manipulation;
-            animation: fadeIn 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+            animation: fade-up 0.4s ease both;
+            position: relative;
+            overflow: hidden;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0,136,204,0.05), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
-
-        .tool-card.hidden {
-            display: none;
-        }
-
+        .tool-card:hover::before { opacity: 1; }
         .tool-card:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: #0088cc;
+            border-color: rgba(0,136,204,0.5);
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 136, 204, 0.2);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(0,136,204,0.1);
         }
-
+        .tool-card.hidden { display: none; }
+        @keyframes fade-up {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
         .tool-icon {
-            width: 48px;
-            height: 48px;
-            margin-bottom: 15px;
-            display: block;
+            width: 48px; height: 48px;
             object-fit: contain;
-            border-radius: 8px;
+            border-radius: 10px;
+            margin-bottom: 14px;
         }
-
+        .tool-arrow {
+            position: absolute;
+            top: 20px; right: 20px;
+            color: var(--text3);
+            font-size: 14px;
+            transition: all 0.25s;
+        }
+        .tool-card:hover .tool-arrow { color: var(--accent); transform: translate(2px,-2px); }
         .tool-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: #e2e8f0;
-            margin-bottom: 10px;
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 8px;
+            line-height: 1.3;
         }
-
-        .tool-description {
-            font-size: 15px;
-            color: #94a3b8;
+        .tool-desc {
+            font-size: 14px;
+            color: var(--text2);
             line-height: 1.6;
+            flex: 1;
         }
-
         .tool-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            background: rgba(0, 136, 204, 0.2);
-            color: #0088cc;
-            border-radius: 12px;
-            font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 14px;
+            padding: 4px 10px;
+            background: var(--blue-glow);
+            border: 1px solid rgba(0,136,204,0.25);
+            border-radius: 100px;
+            font-size: 11px;
             font-weight: 600;
-            margin-top: 12px;
+            color: var(--accent);
+            width: fit-content;
         }
 
-        .mobile-menu-toggle {
-            display: none;
-            background: transparent;
-            border: none;
-            color: #0088cc;
-            font-size: 24px;
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 8px;
-            transition: background 0.3s ease;
+        /* ── MASTERCLASSES ── */
+        .masterclass-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 20px;
         }
-
-        .mobile-menu-toggle:hover {
-            background: rgba(0, 136, 204, 0.1);
+        .mc-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+            animation: fade-up 0.4s ease both;
         }
-
-        @media (max-width: 1024px) {
-            .sidebar {
-                position: static;
-                width: 100%;
-                height: auto;
-                border-right: none;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-                margin-bottom: 30px;
-                left: 0;
-            }
-
-            .main-content {
-                margin-left: 0;
-            }
-
-            .category-list {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 10px;
-            }
-
-            .category-item {
-                margin-bottom: 0;
-            }
-
-            .nav-menu {
-                gap: 2px;
-            }
-
-            .nav-link {
-                padding: 8px 12px;
-                font-size: 13px;
-            }
-
-            .nav-link i {
-                font-size: 14px;
-            }
+        .mc-card:hover {
+            border-color: rgba(0,136,204,0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.4);
         }
+        .mc-thumb {
+            position: relative;
+            aspect-ratio: 16/9;
+            background: #0d1628;
+            overflow: hidden;
+        }
+        .mc-thumb img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .mc-card:hover .mc-thumb img { transform: scale(1.05); }
+        .mc-play {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.3);
+            transition: background 0.25s;
+        }
+        .mc-card:hover .mc-play { background: rgba(0,0,0,0.15); }
+        .mc-play-btn {
+            width: 56px; height: 56px;
+            background: rgba(0,136,204,0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+            transition: all 0.25s;
+        }
+        .mc-card:hover .mc-play-btn {
+            transform: scale(1.12);
+            background: rgba(0,136,204,1);
+            box-shadow: 0 0 30px rgba(0,136,204,0.6);
+        }
+        .mc-play-btn i { color: #fff; font-size: 20px; margin-left: 3px; }
+        .mc-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+        .mc-emoji { font-size: 22px; margin-bottom: 10px; }
+        .mc-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        .mc-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: auto;
+            padding-top: 12px;
+            font-size: 12px;
+            color: var(--text3);
+            font-weight: 500;
+        }
+        .mc-label i { font-size: 11px; }
 
+        /* ── FOOTER ── */
+        .footer {
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid var(--border);
+            padding: 40px 32px;
+            text-align: center;
+            color: var(--text3);
+            font-size: 14px;
+        }
+        .footer a { color: var(--text2); text-decoration: none; transition: color 0.2s; }
+        .footer a:hover { color: var(--accent); }
+
+        /* ── MOBILE ── */
+        @media (max-width: 900px) {
+            .stats { grid-template-columns: repeat(2, 1fr); }
+            .hero { padding: 32px 20px 24px; }
+            .section { padding-left: 20px; padding-right: 20px; }
+        }
         @media (max-width: 768px) {
-            body {
-                padding-top: 80px;
-            }
-
-            .top-bar {
-                padding: 10px 0;
-            }
-
-            .container {
-                padding: 15px;
-            }
-
-            .top-bar-content {
-                padding: 0 15px;
-                flex-wrap: wrap;
-                gap: 15px;
-            }
-
-            .logo {
-                flex: 1;
-                min-width: 0;
-            }
-
-            .logo-image {
-                width: 40px;
-                height: 40px;
-            }
-
-            .logo-text h1 {
-                font-size: 16px;
-            }
-
-            .logo-text p {
-                font-size: 11px;
-            }
-
-            .mobile-menu-toggle {
-                display: block;
-            }
-
-            .nav-menu {
-                display: none;
-                width: 100%;
-                flex-direction: column;
-                gap: 5px;
-                margin-top: 10px;
-            }
-
-            .nav-menu.active {
+            .nav-links { display: none; }
+            .nav-links.open {
                 display: flex;
-            }
-
-            .nav-item {
-                width: 100%;
-            }
-
-            .nav-link {
-                width: 100%;
-                padding: 12px 15px;
-                font-size: 14px;
-                justify-content: center;
-            }
-
-            .telegram-btn {
-                width: 100%;
-                justify-content: center;
-                padding: 12px 20px;
-                font-size: 14px;
-            }
-
-            .sidebar {
-                padding: 20px 15px;
-            }
-
-            .category-list {
                 flex-direction: column;
-                gap: 5px;
+                position: absolute;
+                top: 64px; left: 0; right: 0;
+                background: rgba(8,14,26,0.97);
+                border-bottom: 1px solid var(--border);
+                padding: 12px 20px 20px;
+                gap: 4px;
             }
-
-            .category-item {
-                width: 100%;
-                padding: 15px;
-                font-size: 14px;
-            }
-
-            .hero-section {
-                padding: 25px 15px;
-                margin-bottom: 30px;
-            }
-
-            .hero-section h1 {
-                font-size: 24px;
-                line-height: 1.3;
-            }
-
-            .hero-section p {
-                font-size: 15px;
-            }
-
-            .tools-grid {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-
-            .tool-card {
-                padding: 20px;
-            }
-
-            .tool-icon {
-                width: 42px;
-                height: 42px;
-            }
-
-            .tool-title {
-                font-size: 18px;
-            }
-
-            .tool-description {
-                font-size: 14px;
-            }
-
-            .category-header {
-                flex-wrap: wrap;
-                gap: 10px;
-            }
-
-            .category-header-icon {
-                font-size: 28px;
-            }
-
-            .category-header h2 {
-                font-size: 24px;
-            }
-
-            .main-content {
-                padding: 0;
-            }
-
-            .category-section {
-                margin-bottom: 40px;
-            }
+            .nav-links.open a { padding: 12px 16px; width: 100%; }
+            .burger { display: flex; }
+            .btn-tg { display: none; }
+            .stats { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .masterclass-grid { grid-template-columns: 1fr; }
         }
-
         @media (max-width: 480px) {
-            body {
-                padding-top: 70px;
-            }
-
-            .container {
-                padding: 10px;
-            }
-
-            .top-bar-content {
-                padding: 0 10px;
-            }
-
-            .logo-text h1 {
-                font-size: 14px;
-            }
-
-            .logo-text p {
-                font-size: 10px;
-            }
-
-            .hero-section {
-                padding: 20px 10px;
-            }
-
-            .hero-section h1 {
-                font-size: 20px;
-            }
-
-            .hero-section p {
-                font-size: 14px;
-            }
-
-            .tool-card {
-                padding: 15px;
-            }
-
-            .tool-icon {
-                width: 36px;
-                height: 36px;
-                margin-bottom: 12px;
-            }
-
-            .tool-title {
-                font-size: 16px;
-            }
-
-            .tool-description {
-                font-size: 13px;
-            }
-
-            .category-header h2 {
-                font-size: 20px;
-            }
-
-            .category-header-icon {
-                font-size: 24px;
-            }
-
-            .sidebar {
-                padding: 15px 10px;
-            }
-
-            .category-item {
-                padding: 12px;
-                font-size: 13px;
-            }
+            .stats { grid-template-columns: 1fr 1fr; }
+            .stat-num { font-size: 28px; }
+            .filter-bar { gap: 6px; }
+            .filter-btn { padding: 7px 14px; font-size: 13px; }
         }
     </style>
 </head>
 <body>
-    <div class="top-bar">
-        <div class="top-bar-content">
-            <div class="logo">
-                <img src="https://github.com/CodenameXXV/teacher/blob/main/551028142_2246065635895984_6450569543106551550_n.jpg?raw=true" alt="Ігор Сергійович" class="logo-image">
-                <div class="logo-text">
-                    <h1>Ігор Сергійович</h1>
-                    <p>Сайт з розробками вчителя</p>
-                </div>
-            </div>
-            
-            <button class="mobile-menu-toggle" aria-label="Toggle menu">
-                <i class="fas fa-bars"></i>
-            </button>
-            
-            <nav>
-                <ul class="nav-menu">
-                    <li class="nav-item">
-                        <a href="https://codenamexxv.github.io/base/" target="_blank" class="nav-link">
-                            <i class="fas fa-book"></i>
-                            <span>База знань</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="https://t.me/ittchr" target="_blank" class="nav-link">
-                            <i class="fab fa-telegram"></i>
-                            <span>Блог</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="https://codenamexxv.github.io/ai.github.io/" target="_blank" class="nav-link">
-                            <i class="fas fa-tools"></i>
-                            <span>Підбірка ШІ</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </div>
 
-    <div class="sidebar">
-        <ul class="category-list">
-            <li class="category-item active" data-category="all">
-                <span class="category-icon">🏠</span>
-                Всі інструменти
-            </li>
-            <li class="category-item" data-category="planning">
-                <span class="category-icon">📋</span>
-                Планування
-            </li>
-            <li class="category-item" data-category="english">
-                <span class="category-icon">🇬🇧</span>
-                Англійська мова
-            </li>
-            <li class="category-item" data-category="tools">
-                <span class="category-icon">🛠️</span>
-                Корисні утиліти
-            </li>
-            <li class="category-item" data-category="community">
-                <span class="category-icon">💬</span>
-                Спільнота
-            </li>
+<div class="bg-canvas">
+    <div class="bg-orb"></div>
+    <div class="bg-orb"></div>
+    <div class="bg-orb"></div>
+</div>
+
+<!-- ── NAV ── -->
+<nav class="nav" id="nav">
+    <div class="nav-inner">
+        <a href="#" class="logo">
+            <img src="https://github.com/CodenameXXV/teacher/blob/main/551028142_2246065635895984_6450569543106551550_n.jpg?raw=true"
+                 alt="Ігор Сергійович" class="logo-img"
+                 onerror="this.src='https://raw.githubusercontent.com/CodenameXXV/teacher/refs/heads/main/icon.png'">
+            <div class="logo-text">
+                <div class="logo-name">Ігор Сергійович</div>
+                <div class="logo-sub">Розробки вчителя</div>
+            </div>
+        </a>
+
+        <button class="burger" id="burger" aria-label="Меню">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#tools"><i class="fas fa-th-large"></i> Інструменти</a></li>
+            <li><a href="#masterclasses"><i class="fas fa-play-circle"></i> Майстер-класи</a></li>
+            <li><a href="https://codenamexxv.github.io/base/" target="_blank"><i class="fas fa-book"></i> База знань</a></li>
+            <li><a href="https://free.theresanaiforthat.com/" target="_blank"><i class="fas fa-robot"></i> Підбірка ШІ</a></li>
         </ul>
-    </div>
 
-    <div class="container">
-        <div class="main-content">
-            <div class="hero-section">
-                <h1>Каталог освітніх інструментів</h1>
-                <p>Сучасні рішення для ефективного навчання. Обирайте категорію та знаходьте потрібні інструменти.</p>
-            </div>
-
-            <!-- Єдина секція з фільтрацією карток -->
-            <div class="category-section">
-                <div class="category-header">
-                    <span class="category-header-icon" id="current-icon">🏠</span>
-                    <h2 id="current-title">Всі інструменти</h2>
-                </div>
-                <div class="tools-grid" id="tools-grid">
-                    <!-- Планування -->
-                    <a href="https://codenamexxv.github.io/tcalendar/" target="_blank" class="tool-card" data-category="planning">
-                        <img src="https://raw.githubusercontent.com/CodenameXXV/tcalendar/refs/heads/main/calendar.png" alt="Calendar" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm-8 4H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z%22/%3E%3C/svg%3E'">
-                        <h3 class="tool-title">Календар учителя</h3>
-                        <p class="tool-description">Зручний календар для роботи вчителя.</p>
-                        <span class="tool-badge">Планування</span>
-                    </a>
-					
-                    <a href="https://codenamexxv.github.io/Planner/" target="_blank" class="tool-card" data-category="planning">
-                        <img src="https://raw.githubusercontent.com/CodenameXXV/teacher/refs/heads/main/icon.png" alt="Planner" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z%22/%3E%3C/svg%3E'">
-                        <h3 class="tool-title">Планер вчителя</h3>
-                        <p class="tool-description">Організуйте навчальний процес: плануйте уроки та структуруйте робочий час.</p>
-                        <span class="tool-badge">Планування</span>
-                    </a>
-
-                    <a href="https://codenamexxv.github.io/EduSearch/" target="_blank" class="tool-card" data-category="planning">
-                        <img src="https://raw.githubusercontent.com/CodenameXXV/EduSearch/refs/heads/main/search.png" alt="EduSearch" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z%22/%3E%3C/svg%3E'">
-                        <h3 class="tool-title">Educational Search</h3>
-                        <p class="tool-description">Функціональний пошуковик завдань для учнів по різним популярним сайтам.</p>
-                        <span class="tool-badge">Планування</span>
-                    </a>
-
-                    <a href="https://codenamexxv.github.io/random/" target="_blank" class="tool-card" data-category="planning">
-                        <img src="https://raw.githubusercontent.com/CodenameXXV/random/refs/heads/main/ruletka.png" alt="Random" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z%22/%3E%3C/svg%3E'">
-                        <h3 class="tool-title">Класна Рулетка</h3>
-                        <p class="tool-description">Рандомний вибір учнів без стресу.</p>
-                        <span class="tool-badge">Планування</span>
-                    </a>
-                    
-                    <a href="https://codenamexxv.github.io/ref/" target="_blank" class="tool-card" data-category="planning">
-                        <img src="https://raw.githubusercontent.com/CodenameXXV/ref/refs/heads/main/ref.png" alt="Reflection" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z%22/%3E%3C/svg%3E'">
-                        <h3 class="tool-title">Рефлексія уроку</h3>
-                        <p class="tool-description">Кожен метод — окремий спосіб проаналізувати урок. Вчитель показує — учні відповідають усно або в зошиті.</p>
-                        <span class="tool-badge">Планування</span>
-                    </a>
-
-                    <a href="https://codenamexxv.github.io/logic/" target="_blank" class="tool-card" data-category="planning">
-                        <img src="https://raw.githubusercontent.com/CodenameXXV/logic/refs/heads/main/logic.png" alt="Logic" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z%22/%3E%3C/svg%3E'">
-                        <h3 class="tool-title">Загадки на логіку</h3>
-                        <p class="tool-description">60 загадок — від класичних дитячих питань до складних логічних пасток.</p>
-                        <span class="tool-badge">Планування</span>
-                    </a>
-
-                    <a href="https://codenamexxv.github.io/homework/" target="_blank" class="tool-card" data-category="planning">
-                        <img src="https://raw.githubusercontent.com/CodenameXXV/homework/refs/heads/main/homework.png" alt="Homework" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z%22/%3E%3C/svg%3E'">
-                        <h3 class="tool-title">Генератор домашнього завдання</h3>
-                        <p class="tool-description">Оформлюйте запис домашнього завдання у журнал за рівнями.</p>
-                        <span class="tool-badge">Планування</span>
-                    </a>
-
-                    <!-- Англійська мова -->
-                    <a href="https://codenamexxv.github.io/lesson/" target="_blank" class="tool-card" data-category="english">
-                        <img src="https://raw.githubusercontent.com/CodenameXXV/lesson/refs/heads/main/book-mark.png" alt="Lesson" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z%22/%3E%3C/svg%3E'">
-                        <h3 class="tool-title">Генератор уроків англійської</h3>
-                        <p class="tool-description">Створюйте структуровані уроки англійської з готовими етапами за допомогою ШІ.</p>
-                        <span class="tool-badge">Англійська мова</span>
-                    </a>
-
-                    <a href="https://codenamexxv.github.io/verbs.github.io/" target="_blank" class="tool-card" data-category="english">
-                        <img src="https://raw.githubusercontent.com/CodenameXXV/name/refs/heads/main/circle.png" alt="Verbs" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z%22/%3E%3C/svg%3E'">
-                        <h3 class="tool-title">Неправильні дієслова</h3>
-                        <p class="tool-description">Повний список неправильних дієслів англійської мови з перекладом.</p>
-                        <span class="tool-badge">Англійська мова</span>
-                    </a>
-
-                    <a href="https://codenamexxv.github.io/voc/" target="_blank" class="tool-card" data-category="english">
-                        <img src="https://raw.githubusercontent.com/CodenameXXV/voc/refs/heads/main/dictionary.png" alt="Voc" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53-1.7.94-3.67 1.47-5.74 1.47-5.24 0-9.66-3.5-10.94-8.25C.8 10.06 5.78 14.5 11.8 14.5c.37 0 .72-.02 1.07-.06-.33.89-.74 1.75-1.21 2.57l1.21-1.94zM19 13c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3zm-2-8.5c-.83 0-1.5-.67-1.5-1.5S16.17 1.5 17 1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z%22/%3E%3C/svg%3E'">
-                        <h3 class="tool-title">Voc+</h3>
-                        <p class="tool-description">Легке створення словнику за вашими словами з англійської мови.</p>
-                        <span class="tool-badge">Англійська мова</span>
-                    </a>
-
-                    <a href="https://codenamexxv.github.io/warmup/" target="_blank" class="tool-card" data-category="english">
-                        <img src="https://raw.githubusercontent.com/CodenameXXV/warmup/refs/heads/main/EnWarmUP.png" alt="Warmup" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z%22/%3E%3C/svg%3E'">
-                        <h3 class="tool-title">English WarmUP</h3>
-                        <p class="tool-description">Зручна розминка для вашого уроку Англійської.</p>
-                        <span class="tool-badge">Англійська мова</span>
-                    </a>
-
-                    <a href="https://codenamexxv.github.io/pacman/" target="_blank" class="tool-card" data-category="english">
-                        <img src="https://raw.githubusercontent.com/CodenameXXV/warmup/refs/heads/main/EnWarmUP.png" alt="Warmup" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z%22/%3E%3C/svg%3E'">
-                        <h3 class="tool-title">Pac-Man English - гра-розминка.</h3>
-                        <p class="tool-description">Ігрова розминка для вашого уроку Англійської.</p>
-                        <span class="tool-badge">Англійська мова</span>
-                    </a>
-
-                    <!-- Утиліти -->
-                    <a href="https://codenamexxv.github.io/date/" target="_blank" class="tool-card" data-category="tools">
-                        <img src="https://raw.githubusercontent.com/CodenameXXV/date/refs/heads/main/date.png" alt="Date" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z%22/%3E%3C/svg%3E'">
-                        <h3 class="tool-title">Суперзошит!</h3>
-                        <p class="tool-description">Зручний онлайн зошит для ваших уроків.</p>
-                        <span class="tool-badge">Утиліти</span>
-                    </a>
-		
-                    <a href="https://codenamexxv.github.io/tCalc/" target="_blank" class="tool-card" data-category="tools">
-                        <img src="https://raw.githubusercontent.com/CodenameXXV/tCalc/refs/heads/main/icon-192.png" alt="Calculator" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2zm-8 8H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2z%22/%3E%3C/svg%3E'">
-                        <h3 class="tool-title">Калькулятор середнього балу</h3>
-                        <p class="tool-description">Швидко розраховуйте середній бал учнів.</p>
-                        <span class="tool-badge">Утиліти</span>
-                    </a>
-
-                    <a href="https://codenamexxv.github.io/name/" target="_blank" class="tool-card" data-category="tools">
-                        <img src="https://raw.githubusercontent.com/CodenameXXV/name/refs/heads/main/circle.png" alt="Name" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z%22/%3E%3C/svg%3E'">
-                        <h3 class="tool-title">Транслітерація імені</h3>
-                        <p class="tool-description">Онлайн-інструмент для транслітерації прізвища й імені.</p>
-                        <span class="tool-badge">Утиліти</span>
-                    </a>
-
-                    <a href="https://codenamexxv.github.io/qr/" target="_blank" class="tool-card" data-category="tools">
-                        <img src="https://raw.githubusercontent.com/CodenameXXV/qr/refs/heads/main/imageQR.png" alt="QR" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295l.213-3.054 5.56-5.022c.242-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z%22/%3E%3C/svg%3E'">
-                        <h3 class="tool-title">Генератор QR кодів</h3>
-                        <p class="tool-description">Безкоштовний генератор QR кодів з можливістю додати логотип.</p>
-                        <span class="tool-badge">Утиліти</span>
-                    </a>
-
-                    <a href="https://codenamexxv.github.io/cutout/" target="_blank" class="tool-card" data-category="tools">
-                        <img src="https://raw.githubusercontent.com/CodenameXXV/cutout/refs/heads/main/icon.png" alt="QR" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295l.213-3.054 5.56-5.022c.242-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z%22/%3E%3C/svg%3E'">
-                        <h3 class="tool-title">Видалення фону</h3>
-                        <p class="tool-description">Безкоштовний сервіс з ШІ для легкого видалення фону ваших зображень.</p>
-                        <span class="tool-badge">Утиліти</span>
-                    </a>
-					
-					<a href="https://fruitsend.netlify.app/" target="_blank" class="tool-card" data-category="tools">
-                        <img src="https://raw.githubusercontent.com/CodenameXXV/teacher/refs/heads/main/strawberry.png" alt="QR" class="tool-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%230088cc%22%3E%3Cpath d=%22M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295l.213-3.054 5.56-5.022c.242-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z%22/%3E%3C/svg%3E'">
-                        <h3 class="tool-title">Fruit Send</h3>
-                        <p class="tool-description">FruitSend! — швидка передача файлів без хмари</p>
-                        <span class="tool-badge">Утиліти</span>
-                    </a>
-					
-                </div>
-            </div>
+        <div class="nav-right">
+            <a href="https://t.me/ittchr" target="_blank" class="btn-tg">
+                <i class="fab fa-telegram"></i> Telegram-блог
+            </a>
         </div>
     </div>
+</nav>
 
-    <script>
-        const categoryItems = document.querySelectorAll('.category-item');
-        const toolCards = document.querySelectorAll('.tool-card');
-        const currentIcon = document.getElementById('current-icon');
-        const currentTitle = document.getElementById('current-title');
+<div class="page">
 
-        // Мапа категорій для заголовків та іконок
-        const categoryInfo = {
-            all: { icon: '🏠', title: 'Всі інструменти' },
-            planning: { icon: '📋', title: 'Планування' },
-            english: { icon: '🇬🇧', title: 'Англійська мова' },
-            tools: { icon: '🛠️', title: 'Корисні утиліти' },
-            community: { icon: '💬', title: 'Спільнота' }
-        };
+    <!-- ── HERO ── -->
+    <section class="hero">
+        <h1 class="hero-title">
+            Інструменти для <span>сучасного</span> вчителя
+        </h1>
+        <p class="hero-desc">
+            Авторські розробки для класу — від планування уроків до ігор і ШІ-асистентів.
+        </p>
+    </section>
 
-        // Функція фільтрації карток
-        function filterCards(category) {
-            // Оновлюємо заголовок та іконку
-            const info = categoryInfo[category];
-            currentIcon.textContent = info.icon;
-            currentTitle.textContent = info.title;
+    <!-- ── TOOLS ── -->
+    <section class="section" id="tools">
+        <div class="section-head">
+            <div class="section-icon">🛠️</div>
+            <div>
+                <h2>Інструменти</h2>
+                <p>Фільтруйте за категорією та обирайте потрібний</p>
+            </div>
+        </div>
 
-            // Фільтруємо картки
-            toolCards.forEach(card => {
-                const cardCategory = card.getAttribute('data-category');
-                
-                if (category === 'all' || cardCategory === category) {
+        <div class="filter-bar">
+            <button class="filter-btn active" data-cat="all">🏠 Всі</button>
+            <button class="filter-btn" data-cat="planning">📋 Планування</button>
+            <button class="filter-btn" data-cat="english">🇬🇧 Англійська</button>
+            <button class="filter-btn" data-cat="tools">⚙️ Утиліти</button>
+        </div>
+
+        <div class="tools-grid" id="tools-grid">
+            <!-- Планування -->
+            <a href="https://codenamexxv.github.io/tcalendar/" target="_blank" class="tool-card" data-category="planning">
+                <i class="fas fa-external-link-alt tool-arrow"></i>
+                <img src="https://raw.githubusercontent.com/CodenameXXV/tcalendar/refs/heads/main/calendar.png" alt="" class="tool-icon" onerror="this.style.display='none'">
+                <h3 class="tool-title">Календар учителя</h3>
+                <p class="tool-desc">Зручний розклад із хмарною синхронізацією. Плануйте тижні, відстежуйте дзвінки та налаштовуйте паралелі.</p>
+                <span class="tool-badge">📋 Планування</span>
+            </a>
+
+            <a href="https://codenamexxv.github.io/Planner/" target="_blank" class="tool-card" data-category="planning">
+                <i class="fas fa-external-link-alt tool-arrow"></i>
+                <img src="https://raw.githubusercontent.com/CodenameXXV/teacher/refs/heads/main/icon.png" alt="" class="tool-icon" onerror="this.style.display='none'">
+                <h3 class="tool-title">Планер вчителя</h3>
+                <p class="tool-desc">Організуйте навчальний процес: плануйте уроки та структуруйте робочий час.</p>
+                <span class="tool-badge">📋 Планування</span>
+            </a>
+
+            <a href="https://codenamexxv.github.io/EduSearch/" target="_blank" class="tool-card" data-category="planning">
+                <i class="fas fa-external-link-alt tool-arrow"></i>
+                <img src="https://raw.githubusercontent.com/CodenameXXV/EduSearch/refs/heads/main/search.png" alt="" class="tool-icon" onerror="this.style.display='none'">
+                <h3 class="tool-title">Educational Search</h3>
+                <p class="tool-desc">Функціональний пошуковик завдань для учнів по різним популярним освітнім сайтам.</p>
+                <span class="tool-badge">📋 Планування</span>
+            </a>
+
+            <a href="https://codenamexxv.github.io/random/" target="_blank" class="tool-card" data-category="planning">
+                <i class="fas fa-external-link-alt tool-arrow"></i>
+                <img src="https://raw.githubusercontent.com/CodenameXXV/random/refs/heads/main/ruletka.png" alt="" class="tool-icon" onerror="this.style.display='none'">
+                <h3 class="tool-title">Класна Рулетка</h3>
+                <p class="tool-desc">Рандомний вибір учнів без стресу. Режим соло з барабанною анімацією та генерацією питань ШІ.</p>
+                <span class="tool-badge">📋 Планування</span>
+            </a>
+
+            <a href="https://codenamexxv.github.io/ref/" target="_blank" class="tool-card" data-category="planning">
+                <i class="fas fa-external-link-alt tool-arrow"></i>
+                <img src="https://raw.githubusercontent.com/CodenameXXV/ref/refs/heads/main/ref.png" alt="" class="tool-icon" onerror="this.style.display='none'">
+                <h3 class="tool-title">Рефлексія уроку</h3>
+                <p class="tool-desc">Кожен метод — окремий спосіб проаналізувати урок. Вчитель показує — учні відповідають усно або в зошиті.</p>
+                <span class="tool-badge">📋 Планування</span>
+            </a>
+
+            <a href="https://codenamexxv.github.io/logic/" target="_blank" class="tool-card" data-category="planning">
+                <i class="fas fa-external-link-alt tool-arrow"></i>
+                <img src="https://raw.githubusercontent.com/CodenameXXV/logic/refs/heads/main/logic.png" alt="" class="tool-icon" onerror="this.style.display='none'">
+                <h3 class="tool-title">Загадки на логіку</h3>
+                <p class="tool-desc">60 загадок — від класичних дитячих питань до складних логічних пасток. Ідеально для розминки.</p>
+                <span class="tool-badge">📋 Планування</span>
+            </a>
+
+            <a href="https://codenamexxv.github.io/homework/" target="_blank" class="tool-card" data-category="planning">
+                <i class="fas fa-external-link-alt tool-arrow"></i>
+                <img src="https://raw.githubusercontent.com/CodenameXXV/homework/refs/heads/main/homework.png" alt="" class="tool-icon" onerror="this.style.display='none'">
+                <h3 class="tool-title">Генератор домашнього завдання</h3>
+                <p class="tool-desc">Оформлюйте запис домашнього завдання у журнал за рівнями швидко та структуровано.</p>
+                <span class="tool-badge">📋 Планування</span>
+            </a>
+
+            <!-- Англійська -->
+            <a href="https://codenamexxv.github.io/lesson/" target="_blank" class="tool-card" data-category="english">
+                <i class="fas fa-external-link-alt tool-arrow"></i>
+                <img src="https://raw.githubusercontent.com/CodenameXXV/lesson/refs/heads/main/book-mark.png" alt="" class="tool-icon" onerror="this.style.display='none'">
+                <h3 class="tool-title">Генератор уроків англійської</h3>
+                <p class="tool-desc">Створюйте структуровані уроки англійської з готовими етапами за допомогою ШІ.</p>
+                <span class="tool-badge">🇬🇧 Англійська</span>
+            </a>
+
+            <a href="https://codenamexxv.github.io/verbs.github.io/" target="_blank" class="tool-card" data-category="english">
+                <i class="fas fa-external-link-alt tool-arrow"></i>
+                <img src="https://raw.githubusercontent.com/CodenameXXV/name/refs/heads/main/circle.png" alt="" class="tool-icon" onerror="this.style.display='none'">
+                <h3 class="tool-title">Неправильні дієслова</h3>
+                <p class="tool-desc">Повний список неправильних дієслів англійської мови з перекладом і прикладами.</p>
+                <span class="tool-badge">🇬🇧 Англійська</span>
+            </a>
+
+            <a href="https://codenamexxv.github.io/voc/" target="_blank" class="tool-card" data-category="english">
+                <i class="fas fa-external-link-alt tool-arrow"></i>
+                <img src="https://raw.githubusercontent.com/CodenameXXV/voc/refs/heads/main/dictionary.png" alt="" class="tool-icon" onerror="this.style.display='none'">
+                <h3 class="tool-title">Voc+</h3>
+                <p class="tool-desc">Легке створення словника за вашими словами з англійської мови. Автоматичний переклад.</p>
+                <span class="tool-badge">🇬🇧 Англійська</span>
+            </a>
+
+            <a href="https://codenamexxv.github.io/warmup/" target="_blank" class="tool-card" data-category="english">
+                <i class="fas fa-external-link-alt tool-arrow"></i>
+                <img src="https://raw.githubusercontent.com/CodenameXXV/warmup/refs/heads/main/EnWarmUP.png" alt="" class="tool-icon" onerror="this.style.display='none'">
+                <h3 class="tool-title">English WarmUP</h3>
+                <p class="tool-desc">Зручна розминка для вашого уроку англійської. Запускається на весь екран за секунду.</p>
+                <span class="tool-badge">🇬🇧 Англійська</span>
+            </a>
+
+            <a href="https://codenamexxv.github.io/pacman/" target="_blank" class="tool-card" data-category="english">
+                <i class="fas fa-external-link-alt tool-arrow"></i>
+                <img src="https://raw.githubusercontent.com/CodenameXXV/warmup/refs/heads/main/EnWarmUP.png" alt="" class="tool-icon" onerror="this.style.display='none'">
+                <h3 class="tool-title">Pac-Man English</h3>
+                <p class="tool-desc">Ігрова розминка для вашого уроку: Pac-Man гра з вбудованою вікториною на тему лексики.</p>
+                <span class="tool-badge">🇬🇧 Англійська</span>
+            </a>
+
+            <!-- Утиліти -->
+            <a href="https://codenamexxv.github.io/date/" target="_blank" class="tool-card" data-category="tools">
+                <i class="fas fa-external-link-alt tool-arrow"></i>
+                <img src="https://raw.githubusercontent.com/CodenameXXV/date/refs/heads/main/date.png" alt="" class="tool-icon" onerror="this.style.display='none'">
+                <h3 class="tool-title">Суперзошит!</h3>
+                <p class="tool-desc">Зручний онлайн зошит для ваших уроків із синхронізацією вчитель↔учень, ШІ та малюванням.</p>
+                <span class="tool-badge">⚙️ Утиліти</span>
+            </a>
+
+            <a href="https://codenamexxv.github.io/tCalc/" target="_blank" class="tool-card" data-category="tools">
+                <i class="fas fa-external-link-alt tool-arrow"></i>
+                <img src="https://raw.githubusercontent.com/CodenameXXV/tCalc/refs/heads/main/icon-192.png" alt="" class="tool-icon" onerror="this.style.display='none'">
+                <h3 class="tool-title">Калькулятор середнього балу</h3>
+                <p class="tool-desc">Швидко розраховуйте середній бал учнів. Простий та зручний інтерфейс.</p>
+                <span class="tool-badge">⚙️ Утиліти</span>
+            </a>
+
+            <a href="https://codenamexxv.github.io/name/" target="_blank" class="tool-card" data-category="tools">
+                <i class="fas fa-external-link-alt tool-arrow"></i>
+                <img src="https://raw.githubusercontent.com/CodenameXXV/name/refs/heads/main/circle.png" alt="" class="tool-icon" onerror="this.style.display='none'">
+                <h3 class="tool-title">Транслітерація імені</h3>
+                <p class="tool-desc">Онлайн-інструмент для транслітерації прізвища й імені: англійська, German та КМУ системи.</p>
+                <span class="tool-badge">⚙️ Утиліти</span>
+            </a>
+
+            <a href="https://codenamexxv.github.io/qr/" target="_blank" class="tool-card" data-category="tools">
+                <i class="fas fa-external-link-alt tool-arrow"></i>
+                <img src="https://raw.githubusercontent.com/CodenameXXV/qr/refs/heads/main/imageQR.png" alt="" class="tool-icon" onerror="this.style.display='none'">
+                <h3 class="tool-title">Генератор QR кодів</h3>
+                <p class="tool-desc">Безкоштовний генератор QR кодів з можливістю додати логотип та налаштувати стиль.</p>
+                <span class="tool-badge">⚙️ Утиліти</span>
+            </a>
+
+            <a href="https://codenamexxv.github.io/cutout/" target="_blank" class="tool-card" data-category="tools">
+                <i class="fas fa-external-link-alt tool-arrow"></i>
+                <img src="https://raw.githubusercontent.com/CodenameXXV/cutout/refs/heads/main/icon.png" alt="" class="tool-icon" onerror="this.style.display='none'">
+                <h3 class="tool-title">Видалення фону</h3>
+                <p class="tool-desc">Безкоштовний сервіс із ШІ для легкого видалення фону ваших зображень прямо у браузері.</p>
+                <span class="tool-badge">⚙️ Утиліти</span>
+            </a>
+
+            <a href="https://fruitsend.netlify.app/" target="_blank" class="tool-card" data-category="tools">
+                <i class="fas fa-external-link-alt tool-arrow"></i>
+                <img src="https://raw.githubusercontent.com/CodenameXXV/teacher/refs/heads/main/strawberry.png" alt="" class="tool-icon" onerror="this.style.display='none'">
+                <h3 class="tool-title">Fruit Send</h3>
+                <p class="tool-desc">Швидка peer-to-peer передача файлів без хмари. Ніяких реєстрацій — просто посилання.</p>
+                <span class="tool-badge">⚙️ Утиліти</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- ── MASTERCLASSES ── -->
+    <section class="section" id="masterclasses">
+        <div class="section-head">
+            <div class="section-icon">🎓</div>
+            <div>
+                <h2>Майстер-класи</h2>
+                <p>Записи виступів, вебінарів і занять про ШІ та цифрові інструменти в освіті</p>
+            </div>
+        </div>
+
+        <div class="masterclass-grid">
+
+            <a href="https://youtu.be/nYP-pQedNnE?t=175" target="_blank" class="mc-card" style="animation-delay:0.05s">
+                <div class="mc-thumb">
+                    <img src="https://img.youtube.com/vi/nYP-pQedNnE/maxresdefault.jpg" alt="Вебінар про навчальний контент та AI"
+                         onerror="this.src='https://img.youtube.com/vi/nYP-pQedNnE/hqdefault.jpg'">
+                    <div class="mc-play"><div class="mc-play-btn"><i class="fas fa-play"></i></div></div>
+                </div>
+                <div class="mc-body">
+                    <div class="mc-emoji">🤖</div>
+                    <div class="mc-title">Створення навчального контенту та AI-інструменти у роботі вчителя</div>
+                    <div class="mc-label"><i class="fab fa-youtube"></i> Запис вебінару</div>
+                </div>
+            </a>
+
+            <a href="https://youtu.be/ebPy1ZpEp2Y?t=482" target="_blank" class="mc-card" style="animation-delay:0.1s">
+                <div class="mc-thumb">
+                    <img src="https://img.youtube.com/vi/ebPy1ZpEp2Y/maxresdefault.jpg" alt="Онлайн-студія: цифрові інструменти та ШІ"
+                         onerror="this.src='https://img.youtube.com/vi/ebPy1ZpEp2Y/hqdefault.jpg'">
+                    <div class="mc-play"><div class="mc-play-btn"><i class="fas fa-play"></i></div></div>
+                </div>
+                <div class="mc-body">
+                    <div class="mc-emoji">💻</div>
+                    <div class="mc-title">Цифрові інструменти та ШІ в освіті — заняття онлайн-студії</div>
+                    <div class="mc-label"><i class="fab fa-youtube"></i> Запис заняття</div>
+                </div>
+            </a>
+
+            <a href="https://www.youtube.com/watch?v=vUwXEdEELUs&t=4367s" target="_blank" class="mc-card" style="animation-delay:0.15s">
+                <div class="mc-thumb">
+                    <img src="https://img.youtube.com/vi/vUwXEdEELUs/maxresdefault.jpg" alt="Нейромережі для початківців"
+                         onerror="this.src='https://img.youtube.com/vi/vUwXEdEELUs/hqdefault.jpg'">
+                    <div class="mc-play"><div class="mc-play-btn"><i class="fas fa-play"></i></div></div>
+                </div>
+                <div class="mc-body">
+                    <div class="mc-emoji">🧠</div>
+                    <div class="mc-title">Основи роботи з нейромережами для початківців</div>
+                    <div class="mc-label"><i class="fab fa-youtube"></i> Запис майстер-класу</div>
+                </div>
+            </a>
+
+            <a href="https://youtu.be/dG9EL3Jyles?t=2212" target="_blank" class="mc-card" style="animation-delay:0.2s">
+                <div class="mc-thumb">
+                    <img src="https://img.youtube.com/vi/dG9EL3Jyles/maxresdefault.jpg" alt="Інтерактивність та цифрові рішення"
+                         onerror="this.src='https://img.youtube.com/vi/dG9EL3Jyles/hqdefault.jpg'">
+                    <div class="mc-play"><div class="mc-play-btn"><i class="fas fa-play"></i></div></div>
+                </div>
+                <div class="mc-body">
+                    <div class="mc-emoji">✨</div>
+                    <div class="mc-title">Інтерактивність та цифрові рішення для сучасного навчання</div>
+                    <div class="mc-label"><i class="fab fa-youtube"></i> Запис виступу</div>
+                </div>
+            </a>
+
+            <a href="https://youtu.be/If1gS3jY0Vs?t=2614" target="_blank" class="mc-card" style="animation-delay:0.25s">
+                <div class="mc-thumb">
+                    <img src="https://img.youtube.com/vi/If1gS3jY0Vs/maxresdefault.jpg" alt="Цифрові інструменти та організація навчання"
+                         onerror="this.src='https://img.youtube.com/vi/If1gS3jY0Vs/hqdefault.jpg'">
+                    <div class="mc-play"><div class="mc-play-btn"><i class="fas fa-play"></i></div></div>
+                </div>
+                <div class="mc-body">
+                    <div class="mc-emoji">📚</div>
+                    <div class="mc-title">Цифрові інструменти та ефективна організація навчання</div>
+                    <div class="mc-label"><i class="fab fa-youtube"></i> Запис виступу</div>
+                </div>
+            </a>
+
+            <a href="https://youtu.be/cCuvZZ8k6hM?t=9675" target="_blank" class="mc-card" style="animation-delay:0.3s">
+                <div class="mc-thumb">
+                    <img src="https://img.youtube.com/vi/cCuvZZ8k6hM/maxresdefault.jpg" alt="Штучний інтелект в освіті"
+                         onerror="this.src='https://img.youtube.com/vi/cCuvZZ8k6hM/hqdefault.jpg'">
+                    <div class="mc-play"><div class="mc-play-btn"><i class="fas fa-play"></i></div></div>
+                </div>
+                <div class="mc-body">
+                    <div class="mc-emoji">🎨</div>
+                    <div class="mc-title">Штучний інтелект в освіті та створення навчального контенту</div>
+                    <div class="mc-label"><i class="fab fa-youtube"></i> Запис виступу</div>
+                </div>
+            </a>
+
+            <a href="https://www.youtube.com/live/Il2c7eCRzhA" target="_blank" class="mc-card" style="animation-delay:0.35s">
+                <div class="mc-thumb">
+                    <img src="https://img.youtube.com/vi/Il2c7eCRzhA/maxresdefault.jpg" alt="ШІ в освіті та сучасні підходи"
+                         onerror="this.src='https://img.youtube.com/vi/Il2c7eCRzhA/hqdefault.jpg'">
+                    <div class="mc-play"><div class="mc-play-btn"><i class="fas fa-play"></i></div></div>
+                </div>
+                <div class="mc-body">
+                    <div class="mc-emoji">🚀</div>
+                    <div class="mc-title">Штучний інтелект в освіті та сучасні підходи до навчання</div>
+                    <div class="mc-label"><i class="fab fa-youtube"></i> Запис виступу</div>
+                </div>
+            </a>
+
+            <a href="https://www.youtube.com/watch?v=RUuwtqnMHaw" target="_blank" class="mc-card" style="animation-delay:0.4s">
+                <div class="mc-thumb">
+                    <img src="https://img.youtube.com/vi/RUuwtqnMHaw/maxresdefault.jpg" alt="Сучасні інструменти та ефективний урок"
+                         onerror="this.src='https://img.youtube.com/vi/RUuwtqnMHaw/hqdefault.jpg'">
+                    <div class="mc-play"><div class="mc-play-btn"><i class="fas fa-play"></i></div></div>
+                </div>
+                <div class="mc-body">
+                    <div class="mc-emoji">⏱️</div>
+                    <div class="mc-title">Сучасні інструменти та ефективний урок</div>
+                    <div class="mc-label"><i class="fab fa-youtube"></i> Запис вебінару</div>
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+</div><!-- /page -->
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+    <p>Розробки <a href="https://t.me/ittchr" target="_blank">Ігоря Сергійовича</a> — для педагогів України.</p>
+</footer>
+
+<script>
+    // ── Scroll nav shadow
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    // ── Burger menu
+    const burger = document.getElementById('burger');
+    const navLinks = document.getElementById('nav-links');
+    burger.addEventListener('click', () => {
+        const open = navLinks.classList.toggle('open');
+        burger.querySelector('i').className = open ? 'fas fa-times' : 'fas fa-bars';
+    });
+    navLinks.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+            navLinks.classList.remove('open');
+            burger.querySelector('i').className = 'fas fa-bars';
+        });
+    });
+
+    // ── Filter tabs
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const toolCards  = document.querySelectorAll('.tool-card');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const cat = btn.dataset.cat;
+            toolCards.forEach((card, i) => {
+                const match = cat === 'all' || card.dataset.category === cat;
+                if (match) {
                     card.classList.remove('hidden');
-                    // Додаємо анімацію при показі
+                    card.style.animationDelay = (i * 0.03) + 's';
                     card.style.animation = 'none';
-                    setTimeout(() => {
-                        card.style.animation = 'fadeIn 0.4s ease';
-                    }, 10);
+                    requestAnimationFrame(() => {
+                        card.style.animation = 'fade-up 0.35s ease both';
+                    });
                 } else {
                     card.classList.add('hidden');
                 }
             });
-        }
-
-        // Обробники подій для категорій
-        categoryItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const category = item.getAttribute('data-category');
-                
-                // Оновлюємо активний стан кнопок
-                categoryItems.forEach(cat => cat.classList.remove('active'));
-                item.classList.add('active');
-                
-                // Фільтруємо картки
-                filterCards(category);
-            });
         });
+    });
 
-        // Mobile menu toggle
-        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-        const navMenu = document.querySelector('.nav-menu');
+    // ── Scroll reveal for stat cards
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.style.animation = 'fade-up 0.5s ease both';
+                observer.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.15 });
 
-        if (mobileMenuToggle && navMenu) {
-            mobileMenuToggle.addEventListener('click', () => {
-                navMenu.classList.toggle('active');
-                const icon = mobileMenuToggle.querySelector('i');
-                if (icon) {
-                    if (navMenu.classList.contains('active')) {
-                        icon.classList.remove('fa-bars');
-                        icon.classList.add('fa-times');
-                    } else {
-                        icon.classList.remove('fa-times');
-                        icon.classList.add('fa-bars');
-                    }
-                }
-            });
+    document.querySelectorAll('.stat-card, .mc-card').forEach(el => {
+        el.style.opacity = '0';
+        observer.observe(el);
+    });
 
-            // Close menu when clicking on a link
-            const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    navMenu.classList.remove('active');
-                    const icon = mobileMenuToggle.querySelector('i');
-                    if (icon) {
-                        icon.classList.remove('fa-times');
-                        icon.classList.add('fa-bars');
-                    }
-                });
-            });
-        }
+    // Trigger stat cards visible on load
+    document.querySelectorAll('.stat-card').forEach((el, i) => {
+        setTimeout(() => {
+            el.style.opacity = '';
+            el.style.animation = `fade-up 0.5s ease ${i * 0.07}s both`;
+        }, 300);
+    });
 
-        // Ініціалізація: показуємо всі картки при завантаженні
-        filterCards('all');
-    </script>
+    // ── Smooth scroll offset for fixed nav
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            const id = a.getAttribute('href').slice(1);
+            if (!id) return;
+            const el = document.getElementById(id);
+            if (el) {
+                e.preventDefault();
+                const top = el.getBoundingClientRect().top + window.scrollY - 80;
+                window.scrollTo({ top, behavior: 'smooth' });
+            }
+        });
+    });
+</script>
 </body>
 </html>
