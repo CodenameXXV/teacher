@@ -528,6 +528,158 @@
             .filter-bar { gap: 6px; }
             .filter-btn { padding: 7px 14px; font-size: 13px; }
         }
+
+        /* ══════════ ВІРТУАЛЬНИЙ АСИСТЕНТ — ВІДЖЕТ ══════════ */
+        .va-fab{
+            position:fixed;right:24px;bottom:24px;z-index:250;
+            width:60px;height:60px;border-radius:50%;
+            background:linear-gradient(135deg,var(--blue),var(--blue2));
+            border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
+            box-shadow:0 8px 28px rgba(0,136,204,.45);
+            transition:transform .25s, box-shadow .25s;
+        }
+        .va-fab:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 12px 34px rgba(0,136,204,.55)}
+        .va-fab i{color:#fff;font-size:23px}
+        .va-fab-ring{
+            position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--accent);
+            opacity:.6;animation:va-ping 2.4s ease-out infinite;pointer-events:none;
+        }
+        @keyframes va-ping{0%{transform:scale(.85);opacity:.6}100%{transform:scale(1.35);opacity:0}}
+
+        .va-greeting{
+            position:fixed;right:24px;bottom:96px;z-index:250;max-width:260px;
+            background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);
+            padding:14px 30px 14px 14px;box-shadow:0 12px 40px rgba(0,0,0,.4);
+            font-size:13.5px;color:var(--text);line-height:1.5;cursor:pointer;
+            display:flex;gap:10px;align-items:flex-start;
+            animation:va-pop .35s cubic-bezier(.4,0,.2,1) both;
+        }
+        .va-greeting.hide{display:none}
+        .va-greeting-avatar{width:30px;height:30px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--blue)}
+        .va-greeting-close{
+            position:absolute;top:-8px;right:-8px;width:22px;height:22px;border-radius:50%;
+            background:var(--surface2);border:1px solid var(--border);color:var(--text2);
+            font-size:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;
+        }
+        .va-greeting-close:hover{color:var(--accent);border-color:var(--border2)}
+        @keyframes va-pop{from{opacity:0;transform:translateY(10px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+        .va-overlay{
+            position:fixed;inset:0;z-index:300;background:rgba(3,7,15,.55);backdrop-filter:blur(3px);
+            display:none;align-items:flex-end;justify-content:flex-end;padding:24px;
+        }
+        .va-overlay.open{display:flex}
+
+        .va-window{
+            width:380px;max-width:100%;height:min(640px,85vh);
+            background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);
+            box-shadow:0 24px 70px rgba(0,0,0,.55);display:flex;flex-direction:column;overflow:hidden;
+            animation:va-slide-up .35s cubic-bezier(.4,0,.2,1) both;
+        }
+        @keyframes va-slide-up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+        .va-header{
+            display:flex;align-items:center;gap:12px;padding:16px 18px;
+            border-bottom:1px solid var(--border);background:rgba(255,255,255,.02);flex-shrink:0;
+        }
+        .va-header img{width:38px;height:38px;border-radius:50%;border:2px solid var(--blue);object-fit:cover}
+        .va-header-text{flex:1;min-width:0}
+        .va-header-name{font-size:14px;font-weight:700}
+        .va-header-status{font-size:11.5px;color:var(--green);display:flex;align-items:center;gap:5px}
+        .va-header-status span{width:6px;height:6px;background:var(--green);border-radius:50%}
+        .va-close{background:none;border:none;color:var(--text2);font-size:18px;cursor:pointer;padding:6px;border-radius:8px;transition:all .2s;flex-shrink:0}
+        .va-close:hover{color:var(--accent);background:var(--surface2)}
+
+        .va-body{flex:1;overflow-y:auto;padding:22px 20px}
+        .va-body::-webkit-scrollbar{width:6px}
+        .va-body::-webkit-scrollbar-thumb{background:var(--border2);border-radius:10px}
+
+        /* ── портований wizard UI (масштабовано під вікно чату) ── */
+        .va-steps{display:flex;gap:8px;margin-bottom:24px}
+        .va-steps.hide{display:none}
+        .va-step-dot{flex:1;height:4px;border-radius:4px;background:var(--border);overflow:hidden}
+        .va-step-dot i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--accent));transition:width .5s cubic-bezier(.4,0,.2,1)}
+        .va-step-dot.done i{width:100%}
+        .va-step-dot.active i{width:100%}
+
+        .va-panel{animation:fade-up .4s cubic-bezier(.4,0,.2,1) both}
+
+        .va-intro{text-align:center}
+        .va-intro-icon{font-size:36px;margin-bottom:10px}
+        .va-intro h2{font-family:'Manrope',sans-serif;font-size:18px;font-weight:800;margin-bottom:8px}
+        .va-intro p{color:var(--text2);font-size:13px;margin-bottom:20px}
+        .va-intro-stats{display:flex;gap:14px;margin-bottom:22px;justify-content:center;flex-wrap:wrap}
+        .va-intro-stat b{font-family:'Manrope',sans-serif;font-size:18px;color:var(--accent);display:block}
+        .va-intro-stat span{font-size:10.5px;color:var(--text3)}
+
+        .va-btn-ghost{
+            display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:var(--surface2);
+            color:var(--text);border:1px solid var(--border);border-radius:var(--radius-sm);
+            font-weight:600;font-size:13px;cursor:pointer;transition:all .2s;
+        }
+        .va-btn-ghost:hover{border-color:var(--border2);color:var(--accent)}
+
+        .va-q-eyebrow{font-size:11px;font-weight:700;color:var(--accent);letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px}
+        .va-q-title{font-family:'Manrope',sans-serif;font-size:16.5px;font-weight:800;margin-bottom:4px}
+        .va-q-sub{color:var(--text2);font-size:12.5px;margin-bottom:16px}
+        .va-options{display:flex;flex-direction:column;gap:8px}
+        .va-option-btn{
+            display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--surface);
+            border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);
+            font-size:13.5px;font-weight:600;cursor:pointer;text-align:left;transition:all .2s;width:100%;
+        }
+        .va-option-btn .va-emoji{font-size:18px;flex-shrink:0}
+        .va-option-btn .va-chev{margin-left:auto;color:var(--text3);transition:all .2s;font-size:12px}
+        .va-option-btn:hover{border-color:var(--border2);background:var(--surface2);transform:translateX(3px)}
+        .va-option-btn:hover .va-chev{color:var(--accent);transform:translateX(2px)}
+        .va-back-row{margin-top:16px}
+        .va-back-link{background:none;border:none;color:var(--text3);font-size:12px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+        .va-back-link:hover{color:var(--accent)}
+
+        .va-analysis{display:flex;flex-direction:column;align-items:center;text-align:center;padding:8px 0 4px}
+        .va-radar{position:relative;width:100px;height:100px;margin-bottom:20px}
+        .va-radar-ring{position:absolute;border:1px solid var(--border2);border-radius:50%;animation:va-radar-pulse 2.2s ease-out infinite}
+        .va-radar-ring:nth-child(1){inset:0;animation-delay:0s}
+        .va-radar-ring:nth-child(2){inset:0;animation-delay:.5s}
+        .va-radar-ring:nth-child(3){inset:0;animation-delay:1s}
+        @keyframes va-radar-pulse{0%{transform:scale(.35);opacity:0}20%{opacity:1}100%{transform:scale(1);opacity:0}}
+        .va-radar-core{position:absolute;inset:38%;background:radial-gradient(circle,var(--accent),var(--blue));border-radius:50%;box-shadow:0 0 26px rgba(56,189,248,.6);animation:va-core-beat 1.4s ease-in-out infinite}
+        @keyframes va-core-beat{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+        .va-radar-orbit{position:absolute;inset:-12px;animation:va-spin 6s linear infinite}
+        @keyframes va-spin{to{transform:rotate(360deg)}}
+        .va-radar-dot{position:absolute;top:0;left:50%;width:7px;height:7px;margin-left:-3.5px;background:var(--purple);border-radius:50%;box-shadow:0 0 10px var(--purple)}
+        .va-analysis-lines{min-height:58px}
+        .va-analysis-line{font-size:12.5px;color:var(--text2);opacity:0;transform:translateY(6px);transition:all .4s;margin-bottom:5px}
+        .va-analysis-line.show{opacity:1;transform:translateY(0)}
+        .va-analysis-line b{color:var(--text)}
+
+        .va-result-eyebrow{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700;color:#fbbf24;text-transform:uppercase;letter-spacing:.04em;margin-bottom:14px}
+        .va-top-pick{display:flex;gap:14px;padding:16px;border:1px solid var(--border2);border-radius:var(--radius);background:linear-gradient(135deg,rgba(0,136,204,.10),rgba(129,140,248,.05));margin-bottom:18px}
+        .va-top-pick img{width:44px;height:44px;border-radius:10px;object-fit:contain;flex-shrink:0;background:rgba(255,255,255,.03)}
+        .va-emoji-fallback{width:44px;height:44px;border-radius:10px;background:var(--surface2);display:none;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+        .va-top-pick-body{flex:1;min-width:0}
+        .va-top-pick-title{font-family:'Manrope',sans-serif;font-size:15px;font-weight:800;margin-bottom:5px}
+        .va-top-pick-desc{font-size:12.5px;color:var(--text2);margin-bottom:12px}
+        .va-reason-pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+        .va-reason-pill{display:inline-flex;align-items:center;gap:5px;padding:4px 9px;background:var(--blue-glow);border:1px solid rgba(0,136,204,.25);border-radius:100px;font-size:11px;font-weight:600;color:var(--accent)}
+        .va-alt-label{font-size:11px;color:var(--text3);font-weight:600;margin:18px 0 10px;text-transform:uppercase;letter-spacing:.03em}
+        .va-alt-list{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+        .va-alt-card{display:flex;align-items:center;gap:12px;padding:11px 13px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);text-decoration:none;color:inherit;transition:all .2s}
+        .va-alt-card:hover{border-color:var(--border2);background:var(--surface2);transform:translateX(3px)}
+        .va-alt-card img{width:30px;height:30px;border-radius:7px;object-fit:contain;flex-shrink:0}
+        .va-alt-card .va-emoji-fallback{width:30px;height:30px;border-radius:7px;font-size:15px}
+        .va-alt-body{flex:1;min-width:0}
+        .va-alt-title{font-size:13px;font-weight:700;margin-bottom:2px}
+        .va-alt-desc{font-size:11.5px;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .va-alt-arrow{color:var(--text3);font-size:12px;flex-shrink:0}
+        .va-result-actions{display:flex;gap:10px;flex-wrap:wrap}
+
+        @media (max-width:480px){
+            .va-overlay{padding:0}
+            .va-window{width:100%;height:100%;border-radius:0}
+            .va-greeting{right:16px;bottom:88px;max-width:210px}
+            .va-fab{right:16px;bottom:16px}
+        }
     </style>
 </head>
 <body>
@@ -768,6 +920,7 @@
                     <div class="mc-play"><div class="mc-play-btn"><i class="fas fa-play"></i></div></div>
                 </div>
                 <div class="mc-body">
+                    <div class="mc-emoji">🤖</div>
                     <div class="mc-title">Створення навчального контенту та AI-інструменти у роботі вчителя</div>
                     <div class="mc-label"><i class="fab fa-youtube"></i> Запис вебінару</div>
                 </div>
@@ -780,6 +933,7 @@
                     <div class="mc-play"><div class="mc-play-btn"><i class="fas fa-play"></i></div></div>
                 </div>
                 <div class="mc-body">
+                    <div class="mc-emoji">💻</div>
                     <div class="mc-title">Цифрові інструменти та ШІ в освіті — заняття онлайн-студії</div>
                     <div class="mc-label"><i class="fab fa-youtube"></i> Запис заняття</div>
                 </div>
@@ -792,6 +946,7 @@
                     <div class="mc-play"><div class="mc-play-btn"><i class="fas fa-play"></i></div></div>
                 </div>
                 <div class="mc-body">
+                    <div class="mc-emoji">🧠</div>
                     <div class="mc-title">Основи роботи з нейромережами для початківців</div>
                     <div class="mc-label"><i class="fab fa-youtube"></i> Запис майстер-класу</div>
                 </div>
@@ -804,6 +959,7 @@
                     <div class="mc-play"><div class="mc-play-btn"><i class="fas fa-play"></i></div></div>
                 </div>
                 <div class="mc-body">
+                    <div class="mc-emoji">✨</div>
                     <div class="mc-title">Інтерактивність та цифрові рішення для сучасного навчання</div>
                     <div class="mc-label"><i class="fab fa-youtube"></i> Запис виступу</div>
                 </div>
@@ -816,6 +972,7 @@
                     <div class="mc-play"><div class="mc-play-btn"><i class="fas fa-play"></i></div></div>
                 </div>
                 <div class="mc-body">
+                    <div class="mc-emoji">📚</div>
                     <div class="mc-title">Цифрові інструменти та ефективна організація навчання</div>
                     <div class="mc-label"><i class="fab fa-youtube"></i> Запис виступу</div>
                 </div>
@@ -828,6 +985,7 @@
                     <div class="mc-play"><div class="mc-play-btn"><i class="fas fa-play"></i></div></div>
                 </div>
                 <div class="mc-body">
+                    <div class="mc-emoji">🎨</div>
                     <div class="mc-title">Штучний інтелект в освіті та створення навчального контенту</div>
                     <div class="mc-label"><i class="fab fa-youtube"></i> Запис виступу</div>
                 </div>
@@ -840,6 +998,7 @@
                     <div class="mc-play"><div class="mc-play-btn"><i class="fas fa-play"></i></div></div>
                 </div>
                 <div class="mc-body">
+                    <div class="mc-emoji">🚀</div>
                     <div class="mc-title">Штучний інтелект в освіті та сучасні підходи до навчання</div>
                     <div class="mc-label"><i class="fab fa-youtube"></i> Запис виступу</div>
                 </div>
@@ -852,19 +1011,8 @@
                     <div class="mc-play"><div class="mc-play-btn"><i class="fas fa-play"></i></div></div>
                 </div>
                 <div class="mc-body">
+                    <div class="mc-emoji">⏱️</div>
                     <div class="mc-title">Сучасні інструменти та ефективний урок</div>
-                    <div class="mc-label"><i class="fab fa-youtube"></i> Запис вебінару</div>
-                </div>
-            </a>
-
-            <a href="https://www.youtube.com/watch?v=a6QrSf43Cao" target="_blank" class="mc-card" style="animation-delay:0.4s">
-                <div class="mc-thumb">
-                    <img src="https://img.youtube.com/vi/a6QrSf43Cao/maxresdefault.jpg" alt="Від паперу до інтерактиву: можливості Суперзошита"
-                         onerror="this.src='https://img.youtube.com/vi/RUuwtqnMHaw/hqdefault.jpg'">
-                    <div class="mc-play"><div class="mc-play-btn"><i class="fas fa-play"></i></div></div>
-                </div>
-                <div class="mc-body">
-                    <div class="mc-title">Від паперу до інтерактиву: можливості Суперзошита</div>
                     <div class="mc-label"><i class="fab fa-youtube"></i> Запис вебінару</div>
                 </div>
             </a>
@@ -878,6 +1026,39 @@
 <footer class="footer">
     <p>Розробки <a href="https://t.me/ittchr" target="_blank">Ігоря Сергійовича</a> — для педагогів України.</p>
 </footer>
+
+<!-- ── ВІРТУАЛЬНИЙ АСИСТЕНТ: ВІДЖЕТ ── -->
+<div class="va-greeting hide" id="va-greeting">
+    <img class="va-greeting-avatar" src="https://raw.githubusercontent.com/CodenameXXV/teacher/refs/heads/main/icon.png" alt="">
+    <div>Привіт! Я віртуальний асистент, чим можу допомогти?</div>
+    <button class="va-greeting-close" id="va-greeting-close" aria-label="Закрити підказку">✕</button>
+</div>
+
+<button class="va-fab" id="va-fab" aria-label="Відкрити віртуального асистента">
+    <div class="va-fab-ring"></div>
+    <i class="fas fa-comment-dots"></i>
+</button>
+
+<div class="va-overlay" id="va-overlay">
+    <div class="va-window">
+        <div class="va-header">
+            <img src="https://raw.githubusercontent.com/CodenameXXV/teacher/refs/heads/main/icon.png" alt="">
+            <div class="va-header-text">
+                <div class="va-header-name">Асистент Сергійович</div>
+                <div class="va-header-status"><span></span> Віртуальний асистент</div>
+            </div>
+            <button class="va-close" id="va-close" aria-label="Закрити"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="va-body">
+            <div class="va-steps hide" id="va-steps">
+                <div class="va-step-dot" data-i="1"><i></i></div>
+                <div class="va-step-dot" data-i="2"><i></i></div>
+                <div class="va-step-dot" data-i="3"><i></i></div>
+            </div>
+            <div id="va-panel"></div>
+        </div>
+    </div>
+</div>
 
 <script>
     // ── Scroll nav shadow
@@ -961,6 +1142,340 @@
             }
         });
     });
+</script>
+
+<script>
+    /* ══════════ ВІРТУАЛЬНИЙ АСИСТЕНТ: ДАНІ ══════════ */
+    const VA_TOOLS = [
+      {id:'calendar', title:'Календар учителя', emoji:'📅',
+       desc:'Зручний розклад із хмарною синхронізацією, дзвінки, паралелі.',
+       url:'https://codenamexxv.github.io/tcalendar/',
+       icon:'https://raw.githubusercontent.com/CodenameXXV/tcalendar/refs/heads/main/calendar.png',
+       tags:['planning','schedule','org','time-need-high']},
+      {id:'planner', title:'Планер вчителя', emoji:'🗂️',
+       desc:'Плануйте уроки та структуруйте робочий час.',
+       url:'https://codenamexxv.github.io/Planner/',
+       icon:'https://raw.githubusercontent.com/CodenameXXV/teacher/refs/heads/main/icon.png',
+       tags:['planning','org','time-need-high']},
+      {id:'edusearch', title:'Educational Search', emoji:'🔎',
+       desc:'Пошуковик завдань для учнів по освітніх сайтах.',
+       url:'https://codenamexxv.github.io/EduSearch/',
+       icon:'https://raw.githubusercontent.com/CodenameXXV/EduSearch/refs/heads/main/search.png',
+       tags:['homework','search','org','admin']},
+      {id:'roulette', title:'Класна Рулетка', emoji:'🎡',
+       desc:'Рандомний вибір учнів з анімацією та ШІ-питаннями.',
+       url:'https://codenamexxv.github.io/random/',
+       icon:'https://raw.githubusercontent.com/CodenameXXV/random/refs/heads/main/ruletka.png',
+       tags:['warmup','quick','engagement','ai','game']},
+      {id:'reflection', title:'Рефлексія уроку', emoji:'💭',
+       desc:'Готові методи, щоб швидко проаналізувати урок з класом.',
+       url:'https://codenamexxv.github.io/ref/',
+       icon:'https://raw.githubusercontent.com/CodenameXXV/ref/refs/heads/main/ref.png',
+       tags:['reflection','engagement','quick']},
+      {id:'logic', title:'Загадки на логіку', emoji:'🧩',
+       desc:'60 загадок для швидкої розумової розминки класу.',
+       url:'https://codenamexxv.github.io/logic/',
+       icon:'https://raw.githubusercontent.com/CodenameXXV/logic/refs/heads/main/logic.png',
+       tags:['warmup','quick','engagement','riddles']},
+      {id:'homework', title:'Генератор домашнього завдання', emoji:'📝',
+       desc:'Швидке й структуроване оформлення ДЗ у журнал.',
+       url:'https://codenamexxv.github.io/homework/',
+       icon:'https://raw.githubusercontent.com/CodenameXXV/homework/refs/heads/main/homework.png',
+       tags:['homework','admin','org','quick']},
+      {id:'englesson', title:'Генератор уроків англійської', emoji:'📘',
+       desc:'Структуровані уроки англійської з готовими етапами за ШІ.',
+       url:'https://codenamexxv.github.io/lesson/',
+       icon:'https://raw.githubusercontent.com/CodenameXXV/lesson/refs/heads/main/book-mark.png',
+       tags:['english','planning','ai','time-need-high']},
+      {id:'verbs', title:'Неправильні дієслова', emoji:'🔤',
+       desc:'Повний список неправильних дієслів з перекладом.',
+       url:'https://codenamexxv.github.io/verbs.github.io/',
+       icon:'https://raw.githubusercontent.com/CodenameXXV/name/refs/heads/main/circle.png',
+       tags:['english','reference','quick']},
+      {id:'voc', title:'Voc+', emoji:'📖',
+       desc:'Створення словника за вашими словами з автоперекладом.',
+       url:'https://codenamexxv.github.io/voc/',
+       icon:'https://raw.githubusercontent.com/CodenameXXV/voc/refs/heads/main/dictionary.png',
+       tags:['english','vocabulary','ai','planning']},
+      {id:'warmup', title:'English WarmUP', emoji:'🌅',
+       desc:'Розминка для уроку англійської на весь екран за секунду.',
+       url:'https://codenamexxv.github.io/warmup/',
+       icon:'https://raw.githubusercontent.com/CodenameXXV/warmup/refs/heads/main/EnWarmUP.png',
+       tags:['english','warmup','quick']},
+      {id:'pacman', title:'Pac-Man English', emoji:'👾',
+       desc:'Ігрова розминка: Pac-Man з вікториною на лексику.',
+       url:'https://codenamexxv.github.io/pacman/',
+       icon:'https://raw.githubusercontent.com/CodenameXXV/warmup/refs/heads/main/EnWarmUP.png',
+       tags:['english','warmup','game','engagement','quick']},
+      {id:'notebook', title:'Суперзошит!', emoji:'📓',
+       desc:'Онлайн-зошит із синхронізацією вчитель↔учень, ШІ й малюванням.',
+       url:'https://codenamexxv.github.io/date/',
+       icon:'https://raw.githubusercontent.com/CodenameXXV/date/refs/heads/main/date.png',
+       tags:['notebook','ai','engagement','sync','drawing']},
+      {id:'avgcalc', title:'Калькулятор середнього балу', emoji:'🧮',
+       desc:'Швидкий розрахунок середнього балу учнів.',
+       url:'https://codenamexxv.github.io/tCalc/',
+       icon:'https://raw.githubusercontent.com/CodenameXXV/tCalc/refs/heads/main/icon-192.png',
+       tags:['grades','admin','quick']},
+      {id:'translit', title:'Транслітерація імені', emoji:'🔠',
+       desc:'Транслітерація ПІБ: англійська, German та КМУ системи.',
+       url:'https://codenamexxv.github.io/name/',
+       icon:'https://raw.githubusercontent.com/CodenameXXV/name/refs/heads/main/circle.png',
+       tags:['utility','admin','quick']},
+      {id:'qr', title:'Генератор QR кодів', emoji:'🔳',
+       desc:'QR-коди з логотипом і власним стилем, безкоштовно.',
+       url:'https://codenamexxv.github.io/qr/',
+       icon:'https://raw.githubusercontent.com/CodenameXXV/qr/refs/heads/main/imageQR.png',
+       tags:['utility','quick']},
+      {id:'cutout', title:'Видалення фону', emoji:'✂️',
+       desc:'ШІ-сервіс для видалення фону зображень у браузері.',
+       url:'https://codenamexxv.github.io/cutout/',
+       icon:'https://raw.githubusercontent.com/CodenameXXV/cutout/refs/heads/main/icon.png',
+       tags:['utility','ai','image']},
+      {id:'fruitsend', title:'Fruit Send', emoji:'🍓',
+       desc:'Швидка peer-to-peer передача файлів без хмари й реєстрацій.',
+       url:'https://fruitsend.netlify.app/',
+       icon:'https://raw.githubusercontent.com/CodenameXXV/teacher/refs/heads/main/strawberry.png',
+       tags:['utility','files','quick']},
+    ];
+
+    const VA_QUESTIONS = [
+      {
+        title:'Яка зараз ситуація?',
+        subtitle:'Оберіть варіант, що найкраще описує момент',
+        options:[
+          {label:'Готуюсь до уроку заздалегідь', emoji:'🕐', tags:['planning','time-need-high'], weight:3},
+          {label:'Урок ось-ось почнеться — треба щось швидко', emoji:'⚡', tags:['quick','warmup'], weight:3},
+          {label:'Урок англійської', emoji:'🇬🇧', tags:['english'], weight:3},
+          {label:'Оцінки, журнал, адмінробота', emoji:'🧮', tags:['grades','admin','homework'], weight:3},
+          {label:'Технічна дрібниця (фото, QR, файл)', emoji:'🖼️', tags:['utility'], weight:3},
+        ]
+      },
+      {
+        title:'Скільки часу маєте?',
+        subtitle:'Це допоможе підібрати відповідний темп',
+        options:[
+          {label:'1–2 хвилини, гостра потреба', emoji:'⏱️', tags:['quick'], weight:1},
+          {label:'5–10 хвилин на підготовку', emoji:'🕔', tags:['engagement'], weight:1},
+          {label:'Є час, хочу зробити якісно', emoji:'🗓️', tags:['planning','org','time-need-high'], weight:1},
+        ]
+      },
+      {
+        title:'Що для вас зараз важливіше?',
+        subtitle:'Останній штрих для точного підбору',
+        options:[
+          {label:'Щоб ШІ зробив частину роботи', emoji:'🤖', tags:['ai'], weight:2},
+          {label:'Взаємодія з класом, рух, гра', emoji:'🎲', tags:['engagement','game','warmup'], weight:2},
+          {label:'Порядок, структура, записи', emoji:'📋', tags:['org','admin'], weight:2},
+          {label:'Швидкий простий результат', emoji:'🎯', tags:['quick'], weight:2},
+        ]
+      }
+    ];
+
+    const VA_TAG_REASON = {
+      planning:'Допомагає спланувати наперед', english:'Заточено під урок англійської',
+      quick:'Швидкий результат за хвилину', warmup:'Ідеально для розминки класу',
+      grades:'Рахує та оформлює оцінки', admin:'Знімає рутину з адмінроботи',
+      homework:'Спрощує роботу з домашніми завданнями', utility:'Закриває технічну дрібницю',
+      ai:'Ще й підключає ШІ', engagement:'Активно залучає клас',
+      org:'Наводить порядок і структуру', game:'Формат гри — учні залюбки включаються',
+      reflection:'Підходить для рефлексії уроку', vocabulary:'Розширює словниковий запас',
+      reference:'Швидка довідка під рукою', image:'Працює із зображеннями через ШІ',
+      files:'Швидка передача файлів', notebook:'Замінює паперовий зошит',
+      sync:'Синхронізується з учнями онлайн', drawing:'Можна малювати просто в браузері',
+      riddles:'Збірка готових загадок', schedule:'Тримає розклад під контролем',
+      search:'Пришвидшує пошук завдань', 'time-need-high':'Підходить, коли є час зробити якісно'
+    };
+
+    const VA_ANALYSIS_LINES = [
+      'Зчитую ваші відповіді…',
+      'Порівнюю з базою з <b>18 інструментів</b>…',
+      'Формую персональну рекомендацію…'
+    ];
+
+    /* ══════════ СТАН ══════════ */
+    let vaStep = 0; // 0=intro, 1..3=питання, 4=аналіз, 5=результат
+    let vaAnswers = [];
+
+    const vaPanelEl = document.getElementById('va-panel');
+    const vaStepsEl = document.getElementById('va-steps');
+
+    function vaUpdateStepsUI(){
+      const dots = vaStepsEl.querySelectorAll('.va-step-dot');
+      if(vaStep < 1 || vaStep > 3){ vaStepsEl.classList.add('hide'); return; }
+      vaStepsEl.classList.remove('hide');
+      dots.forEach((d,i)=>{
+        d.classList.remove('active','done');
+        if(i < vaStep-1) d.classList.add('done');
+        else if(i === vaStep-1) d.classList.add('active');
+      });
+    }
+
+    function vaRenderIntro(){
+      vaPanelEl.innerHTML = `
+        <div class="va-panel va-intro">
+          <div class="va-intro-icon">🧭</div>
+          <h2>Підберемо інструмент за 3 кроки</h2>
+          <p>Коротке опитування — і я підкажу, що зручно відкрити прямо зараз.</p>
+          <div class="va-intro-stats">
+            <div class="va-intro-stat"><b>18</b><span>інструментів</span></div>
+            <div class="va-intro-stat"><b>3</b><span>питання</span></div>
+            <div class="va-intro-stat"><b>~15с</b><span>на підбір</span></div>
+          </div>
+          <button class="btn-primary" id="va-start-btn"><i class="fas fa-wand-magic-sparkles"></i> Почати підбір</button>
+        </div>`;
+      document.getElementById('va-start-btn').addEventListener('click', ()=>{ vaStep=1; vaAnswers=[]; vaRender(); });
+    }
+
+    function vaRenderQuestion(i){
+      const q = VA_QUESTIONS[i-1];
+      vaPanelEl.innerHTML = `
+        <div class="va-panel">
+          <div class="va-q-eyebrow">Крок ${i} із 3</div>
+          <h2 class="va-q-title">${q.title}</h2>
+          <p class="va-q-sub">${q.subtitle}</p>
+          <div class="va-options">
+            ${q.options.map((o,idx)=>`
+              <button class="va-option-btn" data-idx="${idx}">
+                <span class="va-emoji">${o.emoji}</span>
+                <span>${o.label}</span>
+                <i class="fas fa-chevron-right va-chev"></i>
+              </button>`).join('')}
+          </div>
+          ${i > 1 ? `<div class="va-back-row"><button class="va-back-link" id="va-back-btn"><i class="fas fa-arrow-left"></i> Назад</button></div>` : ''}
+        </div>`;
+      vaPanelEl.querySelectorAll('.va-option-btn').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          vaAnswers[i-1] = q.options[+btn.dataset.idx];
+          if(i < 3){ vaStep = i+1; vaRender(); }
+          else { vaStep = 4; vaRender(); vaRunAnalysis(); }
+        });
+      });
+      const back = document.getElementById('va-back-btn');
+      if(back) back.addEventListener('click', ()=>{ vaStep = i-1; vaRender(); });
+    }
+
+    function vaRenderAnalysis(){
+      vaPanelEl.innerHTML = `
+        <div class="va-panel va-analysis">
+          <div class="va-radar">
+            <div class="va-radar-ring"></div><div class="va-radar-ring"></div><div class="va-radar-ring"></div>
+            <div class="va-radar-orbit"><div class="va-radar-dot"></div></div>
+            <div class="va-radar-core"></div>
+          </div>
+          <div class="va-analysis-lines">
+            ${VA_ANALYSIS_LINES.map((l,i)=>`<div class="va-analysis-line" data-i="${i}">${l}</div>`).join('')}
+          </div>
+        </div>`;
+    }
+
+    function vaRunAnalysis(){
+      vaRenderAnalysis();
+      const lines = vaPanelEl.querySelectorAll('.va-analysis-line');
+      lines.forEach((l,i)=> setTimeout(()=> l.classList.add('show'), 250 + i*430));
+      setTimeout(()=>{ vaStep = 5; vaRender(); }, 250 + lines.length*430 + 500);
+    }
+
+    function vaScoreTools(){
+      const tagWeights = {};
+      vaAnswers.forEach(opt=>{
+        opt.tags.forEach(t=>{ tagWeights[t] = (tagWeights[t]||0) + opt.weight; });
+      });
+      const scored = VA_TOOLS.map(tool=>{
+        let score = 0; const matched = [];
+        tool.tags.forEach(t=>{
+          if(tagWeights[t]){ score += tagWeights[t]; matched.push([t, tagWeights[t]]); }
+        });
+        matched.sort((a,b)=>b[1]-a[1]);
+        return { tool, score, reasons: matched.map(m=>m[0]) };
+      });
+      scored.sort((a,b)=>b.score-a.score);
+      return scored;
+    }
+
+    function vaToolIconHTML(tool, size){
+      return `<img src="${tool.icon}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+              <div class="va-emoji-fallback" style="width:${size}px;height:${size}px">${tool.emoji}</div>`;
+    }
+
+    function vaRenderResult(){
+      const scored = vaScoreTools();
+      const top = scored[0];
+      const alts = scored.slice(1,3);
+      const reasons = top.reasons.slice(0,3).map(t=>VA_TAG_REASON[t]).filter(Boolean);
+
+      vaPanelEl.innerHTML = `
+        <div class="va-panel">
+          <div class="va-result-eyebrow"><i class="fas fa-trophy"></i> Найкращий збіг</div>
+          <div class="va-top-pick">
+            ${vaToolIconHTML(top.tool, 44)}
+            <div class="va-top-pick-body">
+              <div class="va-top-pick-title">${top.tool.title}</div>
+              <div class="va-top-pick-desc">${top.tool.desc}</div>
+              <div class="va-reason-pills">
+                ${reasons.map(r=>`<span class="va-reason-pill"><i class="fas fa-check"></i> ${r}</span>`).join('')}
+              </div>
+              <a class="btn-primary" href="${top.tool.url}" target="_blank" rel="noopener">
+                <i class="fas fa-arrow-up-right-from-square"></i> Відкрити
+              </a>
+            </div>
+          </div>
+          ${alts.length ? `
+            <div class="va-alt-label">Також може підійти</div>
+            <div class="va-alt-list">
+              ${alts.map(a=>`
+                <a class="va-alt-card" href="${a.tool.url}" target="_blank" rel="noopener">
+                  ${vaToolIconHTML(a.tool, 30)}
+                  <div class="va-alt-body">
+                    <div class="va-alt-title">${a.tool.title}</div>
+                    <div class="va-alt-desc">${a.tool.desc}</div>
+                  </div>
+                  <i class="fas fa-arrow-right va-alt-arrow"></i>
+                </a>`).join('')}
+            </div>` : ''}
+          <div class="va-result-actions">
+            <button class="va-btn-ghost" id="va-retry-btn"><i class="fas fa-rotate-left"></i> Пройти ще раз</button>
+          </div>
+        </div>`;
+
+      document.getElementById('va-retry-btn').addEventListener('click', ()=>{ vaStep = 0; vaAnswers = []; vaRender(); });
+    }
+
+    function vaRender(){
+      vaUpdateStepsUI();
+      if(vaStep === 0) vaRenderIntro();
+      else if(vaStep >= 1 && vaStep <= 3) vaRenderQuestion(vaStep);
+      else if(vaStep === 5) vaRenderResult();
+    }
+
+    vaRender();
+
+    /* ══════════ ВІДКРИТТЯ / ЗАКРИТТЯ ВІДЖЕТА ══════════ */
+    const vaFab = document.getElementById('va-fab');
+    const vaGreeting = document.getElementById('va-greeting');
+    const vaGreetingClose = document.getElementById('va-greeting-close');
+    const vaOverlay = document.getElementById('va-overlay');
+    const vaCloseBtn = document.getElementById('va-close');
+
+    function vaOpenModal(){
+      vaOverlay.classList.add('open');
+      vaGreeting.classList.add('hide');
+    }
+    function vaCloseModalFn(){
+      vaOverlay.classList.remove('open');
+    }
+
+    vaFab.addEventListener('click', vaOpenModal);
+    vaGreeting.addEventListener('click', vaOpenModal);
+    vaGreetingClose.addEventListener('click', (e)=>{ e.stopPropagation(); vaGreeting.classList.add('hide'); });
+    vaCloseBtn.addEventListener('click', vaCloseModalFn);
+    vaOverlay.addEventListener('click', (e)=>{ if(e.target === vaOverlay) vaCloseModalFn(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && vaOverlay.classList.contains('open')) vaCloseModalFn(); });
+
+    // Показати привітання автоматично через невелику затримку
+    setTimeout(()=>{
+      if(!vaOverlay.classList.contains('open')) vaGreeting.classList.remove('hide');
+    }, 2200);
 </script>
 </body>
 </html>
